@@ -1,0 +1,868 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>US History II · Weekly Agenda</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Lexend:wght@400;600;700&display=swap">
+<style>
+/* Layout: a week ledger — season banner on top, five day columns (stacking on phones), each lesson a row with its Atlas link. */
+:root{
+  --font-display:"Patrick Hand","Comic Neue",ui-rounded,system-ui,sans-serif;
+  --font-body:"Lexend",ui-sans-serif,system-ui,sans-serif;
+  /* neutrals */
+  --surface:#ffffff; --ink:#1f1d1b; --muted:#6b645d; --line:#e4ddd5;
+  /* season (fall default) */
+  --bg:#f5efe9; --accent:#a3361a; --accent-2:#b7810b; --wash:#f0e1d3; --on-accent:#ffffff;
+  --p1:#c2461e; --p2:#d99a1b; --p3:#8a4b2a;
+  --ok:#2f7a45;
+}
+body[data-season="winter"]{--bg:#eef3f8;--accent:#1d5a86;--accent-2:#5b8fb5;--wash:#dde8f2;--line:#d9e2ea;--muted:#5b6672;--p1:#ffffff;--p2:#bcd4e8;--p3:#8fb3d2}
+body[data-season="spring"]{--bg:#f1f6ef;--accent:#3a7333;--accent-2:#c4507f;--wash:#e2eedc;--line:#dbe4d6;--muted:#5d6858;--p1:#f2a7c3;--p2:#f7cfdc;--p3:#ffffff}
+body[data-season="summer"]{--bg:#f8f4e7;--accent:#0b6f7e;--accent-2:#c27a0a;--wash:#ecebd5;--line:#e6dfc8;--muted:#686251;--p1:#f2c14e;--p2:#ffe08a;--p3:#7fd0d8}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --surface:#211d1b; --ink:#f1ece7; --muted:#ada49b; --line:#3a332e;
+    --bg:#171311; --accent:#ee8a5f; --accent-2:#e3b448; --wash:#2c221c; --on-accent:#1a1210;
+    --p1:#c2532a; --p2:#c9901f; --p3:#7d4a2e; --ok:#73c08a; color-scheme:dark;
+  }
+  :root:not([data-theme="light"]) body[data-season="winter"]{--surface:#1a1f26;--line:#2e3844;--muted:#9eabb8;--bg:#10151b;--accent:#8cc3ea;--accent-2:#a9c7de;--wash:#1b2631;--p1:#e7f1fa;--p2:#9fbdd6;--p3:#6d93b3}
+  :root:not([data-theme="light"]) body[data-season="spring"]{--surface:#1b211b;--line:#303b2f;--muted:#a1ad9d;--bg:#121711;--accent:#8fcf84;--accent-2:#ec8db3;--wash:#1f2a1d;--p1:#d9809f;--p2:#e8b3c6;--p3:#e9efe6}
+  :root:not([data-theme="light"]) body[data-season="summer"]{--surface:#1f1e18;--line:#38362a;--muted:#aca48d;--bg:#15140f;--accent:#5fcbd9;--accent-2:#f0b54a;--wash:#27261b;--p1:#e6b33f;--p2:#f5d47a;--p3:#5fb8c2}
+}
+:root[data-theme="dark"]{
+  --surface:#211d1b; --ink:#f1ece7; --muted:#ada49b; --line:#3a332e;
+  --bg:#171311; --accent:#ee8a5f; --accent-2:#e3b448; --wash:#2c221c; --on-accent:#1a1210;
+  --p1:#c2532a; --p2:#c9901f; --p3:#7d4a2e; --ok:#73c08a; color-scheme:dark;
+}
+:root[data-theme="dark"] body[data-season="winter"]{--surface:#1a1f26;--line:#2e3844;--muted:#9eabb8;--bg:#10151b;--accent:#8cc3ea;--accent-2:#a9c7de;--wash:#1b2631;--p1:#e7f1fa;--p2:#9fbdd6;--p3:#6d93b3}
+:root[data-theme="dark"] body[data-season="spring"]{--surface:#1b211b;--line:#303b2f;--muted:#a1ad9d;--bg:#121711;--accent:#8fcf84;--accent-2:#ec8db3;--wash:#1f2a1d;--p1:#d9809f;--p2:#e8b3c6;--p3:#e9efe6}
+:root[data-theme="dark"] body[data-season="summer"]{--surface:#1f1e18;--line:#38362a;--muted:#aca48d;--bg:#15140f;--accent:#5fcbd9;--accent-2:#f0b54a;--wash:#27261b;--p1:#e6b33f;--p2:#f5d47a;--p3:#5fb8c2}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background-color:var(--bg);background-image:radial-gradient(1100px 560px at -5% -12%,color-mix(in srgb,var(--accent-2) 20%,transparent),transparent 62%),radial-gradient(900px 520px at 105% -6%,color-mix(in srgb,var(--accent) 13%,transparent),transparent 60%),radial-gradient(900px 600px at 50% 115%,color-mix(in srgb,var(--accent-2) 10%,transparent),transparent 60%);background-attachment:fixed;color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.5;transition:background .4s}
+#sky{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:1320px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:22px}
+
+/* banner */
+.banner{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 24px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:4px 14px 4px 6px;border-radius:999px;border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 75%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--accent)}
+.eyebrow img{width:24px;height:24px;display:block}
+.h1-dates{color:var(--accent)}
+.lift{box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 6%,transparent),0 14px 34px -18px color-mix(in srgb,var(--accent) 45%,transparent)}
+.plan{border:1px solid var(--line);border-radius:12px;padding:12px 14px 14px;display:flex;flex-direction:column;gap:12px;margin:0;min-width:0}
+.plan legend{font-family:var(--font-display);font-size:21px;padding:0 6px}
+.planhead{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.focusline{font-weight:600;color:var(--accent)}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(36px,6vw,62px);line-height:1;letter-spacing:0;margin:6px 0 8px;text-wrap:balance}
+.sub{color:var(--muted);margin:0;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.nav{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button,.btn,select{font:inherit;font-size:14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 14px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;min-height:38px}
+button:hover,.btn:hover{border-color:var(--accent)}
+button:focus-visible,.btn:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:700}
+button.ghost{background:transparent;border-color:transparent;color:var(--muted)}
+button.ghost:hover{color:var(--ink)}
+button.danger{color:#b3261e;border-color:transparent;background:transparent}
+.iconbtn{width:38px;justify-content:center;padding:0;font-size:18px}
+
+/* focus strip */
+.focus{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 18px;display:grid;grid-template-columns:auto 1fr auto;gap:6px 18px;align-items:start}
+.focus h2{font-family:var(--font-body);font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin:3px 0 0;color:var(--accent)}
+.focus p{margin:0;white-space:pre-wrap;min-width:0}
+.focus .empty{color:var(--muted);font-style:italic}
+.weekfocus{display:flex;flex-direction:column;gap:10px;min-width:0}
+.wf{display:grid;grid-template-columns:100px minmax(0,1fr);gap:12px;align-items:baseline}
+.wflabel{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.wftext{font-family:var(--font-display);font-size:23px;line-height:1.2}
+.wfrem{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px}
+.wfrem li::marker{color:var(--accent)}
+@media (max-width:480px){.wf{grid-template-columns:1fr;gap:2px}}
+@media (max-width:640px){.focus{grid-template-columns:1fr}}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.status{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.dot.live{background:var(--ok)}
+
+/* week grid */
+.weekscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px;scroll-snap-type:x proximity}
+.week{display:grid;grid-template-columns:repeat(5,minmax(210px,1fr));gap:12px;min-width:min-content}
+.week .day{scroll-snap-align:start}
+.agtable{width:100%;min-width:960px;border-collapse:separate;border-spacing:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;table-layout:fixed}
+.agtable th,.agtable td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 14px;vertical-align:middle;text-align:left;overflow-wrap:anywhere}
+.agtable tr > :last-child{border-right:0}
+.agtable tbody tr:last-child > *{border-bottom:0}
+.agtable thead th{background:linear-gradient(180deg,var(--wash),color-mix(in srgb,var(--wash) 55%,var(--surface)));vertical-align:top}
+.agtable thead th:first-child{width:150px}
+.agtable .dh{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.agtable .dh .dayname{font-size:22px}
+.agtable .dh .holiday{margin:0}
+.agtable th[scope=row]{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;background:var(--wash)}
+.agtable td.topic{text-align:center;font-weight:600}
+.agtable td{font-size:14.5px;line-height:1.5}
+.agtable td a{color:var(--accent)}
+.agtable .today{background:color-mix(in srgb,var(--accent) 7%,var(--surface))}
+.agtable thead .today{background:color-mix(in srgb,var(--accent) 16%,var(--wash))}
+.agtable .cellsep{border-top:1px dashed var(--line);margin:8px 0}
+.agtable .tbtn{font-size:12px;min-height:26px;padding:2px 10px}
+.agtable .blank{color:var(--muted);font-style:italic;font-size:13px}
+.agtable td.offcell{text-align:center;vertical-align:middle;background:color-mix(in srgb,var(--accent-2) 12%,var(--surface))}
+.offart{display:flex;flex-direction:column;align-items:center;gap:10px;font-family:var(--font-display);font-size:24px;line-height:1.15;color:var(--ink);text-wrap:balance;text-align:center}
+.offart strong{font-weight:400}
+.offart svg{max-width:100%;height:auto}
+.day .offart{padding:22px 14px;flex:1;justify-content:center;background:color-mix(in srgb,var(--accent-2) 12%,var(--surface))}
+.apill{display:inline-block;font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;margin-bottom:4px;background:var(--wash);color:var(--ink);font-style:normal}
+.apill.summative{background:var(--accent);color:var(--on-accent)}
+.apill.formative{background:color-mix(in srgb,var(--accent-2) 28%,transparent)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;border-radius:0;min-height:34px;padding:6px 14px;background:transparent}
+.seg button[aria-pressed=true]{background:var(--accent);color:var(--on-accent);font-weight:700}
+.day{background:var(--surface);border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;min-width:0}
+.day.today{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 25%,transparent)}
+.dayhead{padding:12px 14px 10px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline;gap:8px;background:var(--wash);border-radius:13px 13px 0 0}
+.dayname{font-family:var(--font-display);font-weight:400;font-size:23px;line-height:1.1}
+.daydate{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.holiday{display:inline-block;margin:10px 14px 0;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;background:color-mix(in srgb,var(--accent-2) 20%,transparent);color:var(--ink);align-self:flex-start}
+.entries{list-style:none;margin:0;padding:6px 0;display:flex;flex-direction:column;flex:1}
+.entry{padding:10px 14px;border-bottom:1px dashed var(--line);display:flex;flex-direction:column;gap:4px;min-width:0}
+.entry:last-child{border-bottom:0}
+.cls{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:6px;color:var(--muted)}
+.swatch{width:9px;height:9px;border-radius:3px;flex:none}
+.title{font-weight:700;font-size:15px;line-height:1.3;overflow-wrap:anywhere}
+.meta{font-size:13px;color:var(--muted);margin:0;overflow-wrap:anywhere}
+.meta b{color:var(--ink);font-weight:700}
+.links{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;align-items:center}
+.atlas{font-size:13px;font-weight:700;color:var(--accent);text-decoration:none;border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);border-radius:999px;padding:3px 10px;display:inline-flex;align-items:center;gap:5px}
+.atlas:hover{background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.nolink{font-size:12px;color:var(--muted);font-style:italic}
+.pill{font-size:11px;font-weight:700;padding:1px 7px;border-radius:999px;background:var(--wash);color:var(--muted)}
+.edit{margin-left:auto;font-size:13px;min-height:28px;padding:2px 10px}
+.add{margin:6px 14px 14px;justify-content:center;border-style:dashed;color:var(--muted);background:transparent}
+.add:hover{color:var(--accent)}
+.noday{padding:14px;color:var(--muted);font-size:14px;font-style:italic;margin:0}
+
+/* dialogs */
+dialog{border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--ink);padding:0;width:min(520px,calc(100vw - 32px));max-height:calc(100vh - 32px)}
+dialog::backdrop{background:rgba(10,8,6,.45)}
+dialog form{padding:20px;display:flex;flex-direction:column;gap:14px}
+dialog h3{font-family:var(--font-display);font-weight:400;font-size:28px;margin:0}
+label{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:700;color:var(--muted)}
+.hint{font-weight:400;font-size:12px}
+input,textarea,dialog select{font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 11px;width:100%;min-width:0}
+dialog select{border-radius:10px}
+textarea{resize:vertical;min-height:70px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:480px){.row{grid-template-columns:1fr}}
+.actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;align-items:center}
+.actions .spacer{flex:1}
+.autofill{font-size:12px;color:var(--ok);font-weight:700}
+.meta{white-space:pre-wrap}
+.meta a,.preview a{color:var(--accent)}
+dialog.wide{width:min(960px,calc(100vw - 32px))}
+.preview{overflow:auto;max-height:52vh;border:1px solid var(--line);border-radius:10px;background:#fff;padding:12px;font-size:13px;color:#222}
+.paper{background:#fff;color:#222;border:1px solid var(--line);border-radius:14px;padding:18px;min-width:960px}
+.paper a{color:#3b73c8}
+.preview p{margin:0 0 10px}
+.preview table{min-width:760px}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:14px;z-index:5;opacity:0;transition:opacity .25s;pointer-events:none}
+.toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+#vAtlas{display:none!important}
+</style>
+</head>
+<body>
+
+
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="wrap">
+  <header class="banner">
+    <div>
+      <div class="eyebrow"><img id="seasonIcon" alt="" width="24" height="24"><span id="seasonLabel">Fall</span></div>
+      <h1 id="weekTitle">Week of …</h1>
+      <p class="sub"><span id="seasonLine"></span><a class="atlas" id="atlasHome" href="#" target="_blank" rel="noopener" hidden>My Atlas lesson calendar ↗</a></p>
+    </div>
+    <nav class="nav" aria-label="Week navigation">
+      <button class="iconbtn" id="prev" aria-label="Previous week">‹</button>
+      <button id="thisWeek">This week</button>
+      <button class="iconbtn" id="next" aria-label="Next week">›</button>
+      <input type="date" id="jump" aria-label="Jump to a date" style="width:auto;border-radius:999px;min-height:38px;padding:6px 12px;background:var(--surface)">
+    </nav>
+  </header>
+
+  <section class="focus lift" aria-labelledby="focusH">
+    <h2 id="focusH">This week</h2>
+    <div id="focusText" class="weekfocus"></div>
+    <button class="edit" id="editFocus" hidden>Edit</button>
+  </section>
+
+  <div class="toolbar">
+    <div class="status"><span class="dot" id="dot"></span><span id="statusText">Loading your agenda…</span></div>
+    <div class="nav">
+      <select id="viewCls" aria-label="Class shown in the table" hidden></select>
+      <span class="seg" role="group" aria-label="Layout"><button id="vTable" aria-pressed="true">Table</button><button id="vCards" aria-pressed="false">Cards</button><button id="vAtlas" aria-pressed="false">Atlas</button></span>
+      <button id="copyWeek" class="primary" hidden>Copy week for Atlas</button>
+      <button id="copyCanvas" hidden>Copy for Canvas</button>
+      <button id="copyLast" hidden>Copy last week</button>
+      <button id="openSettings" hidden>Classes &amp; Atlas</button>
+    </div>
+  </div>
+
+  <div class="weekscroll"><div id="tableView" aria-live="polite"></div><main class="week" id="week" aria-live="polite" hidden></main></div>
+</div>
+
+<dialog id="entryDlg">
+  <form id="entryForm" method="dialog">
+    <h3 id="entryH">Add lesson</h3>
+    <div class="row">
+      <label>Day<select id="fDay"></select></label>
+      <label>Class<select id="fCls"></select></label>
+    </div>
+    <label>Topic<input id="fTopic" autocomplete="off" placeholder="e.g. World War I"></label>
+    <label>Lesson title <span class="hint">Optional. Pick a saved lesson and its Atlas link fills in automatically.</span>
+      <input id="fTitle" list="libList" autocomplete="off" placeholder="e.g. The World Wars Documentary">
+      <datalist id="libList"></datalist>
+    </label>
+    <label>Atlas lesson plan link <span class="autofill" id="autofillNote" hidden>Filled from your saved lessons</span>
+      <input id="fUrl" type="url" inputmode="url" placeholder="Paste the lesson or unit URL from Atlas">
+    </label>
+    <label>SWBAT / learning objective<textarea id="fObj" rows="3"></textarea></label>
+    <label>Lesson focus <span class="hint">A short, student-friendly focus based on the objective.</span><input id="fLFocus" autocomplete="off" placeholder="e.g. Could World War I have been prevented?"></label>
+    <label>Agenda / teaching and learning <span class="hint">Activities and strategies. Paste links as they are, or write [Link text](https://…).</span><textarea id="fAct" rows="3"></textarea></label>
+    <fieldset class="plan"><legend>Lesson plan for Atlas</legend>
+      <div class="planhead"><span class="hint" id="draftNote">Teacher-led and independent practice go into Atlas's Teaching and Learning row.</span><button type="button" id="draftBtn" class="tbtn" hidden>✦ Draft from objective</button></div>
+      <label>Do Now / warm-up<textarea id="fDoNow" rows="2"></textarea></label>
+      <label>Teacher-led instruction <span class="hint">I do / we do</span><textarea id="fTeach" rows="3"></textarea></label>
+      <label>Independent practice <span class="hint">You do</span><textarea id="fIndep" rows="3"></textarea></label>
+      <label>Closure<textarea id="fClosure" rows="2"></textarea></label>
+    </fieldset>
+    <div class="row"><label>Assessment type<select id="fAType"><option value="">None</option><option value="Formative">Formative</option><option value="Summative">Summative</option></select></label><span></span></div>
+    <label>Assessment / evidence of student learning<textarea id="fEvid" rows="2" placeholder="e.g. Exit ticket: three causes of WWI"></textarea></label>
+    <label>Assignments / due dates<input id="fHw" autocomplete="off"></label>
+    <label>Additional notes<input id="fNotes" autocomplete="off"></label>
+    <div class="actions">
+      <button type="button" class="danger" id="delEntry" hidden>Delete</button>
+      <span class="spacer"></span>
+      <button type="button" class="ghost" data-close>Cancel</button>
+      <button type="submit" class="primary">Save lesson</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="focusDlg">
+  <form id="focusForm" method="dialog">
+    <h3>This week</h3>
+    <label>Weekly focus<input id="fFocus" autocomplete="off" placeholder="e.g. How did World War I change America at home?"></label>
+    <label>Reminders <span class="hint">One per line.</span><textarea id="fRem" rows="5" placeholder="Guided reading due Wednesday 11:30 PM&#10;Unit quiz Friday"></textarea></label>
+    <div class="actions"><button type="button" class="ghost" data-close>Cancel</button><button type="submit" class="primary">Save</button></div>
+  </form>
+</dialog>
+
+<dialog id="setDlg">
+  <form id="setForm" method="dialog">
+    <h3>Classes &amp; Atlas</h3>
+    <label>Your name <span class="hint">Appears at the top of the Atlas week copy.</span><input id="fName" autocomplete="name"></label>
+    <label>Your classes <span class="hint">One per line. Add the Canvas course after a bar: US History II | https://…</span><textarea id="fClasses" rows="6"></textarea></label>
+    <label>Atlas calendar link <span class="hint">Your Atlas lesson calendar, shown in the header.</span><input id="fHome" type="url" placeholder="https://yourschool.rubiconatlas.org/"></label>
+    <label>Season theme<select id="fSeason">
+      <option value="auto">Automatic, by the week's date</option>
+      <option value="fall">Fall</option><option value="winter">Winter</option>
+      <option value="spring">Spring</option><option value="summer">Summer</option>
+    </select></label>
+    <div class="actions"><button type="button" class="ghost" data-close>Cancel</button><button type="submit" class="primary">Save</button></div>
+  </form>
+</dialog>
+
+<dialog id="offDlg">
+  <form id="offForm" method="dialog">
+    <h3 id="offH">No school</h3>
+    <label>What to show <span class="hint">Mention Thanksgiving and a turkey appears.</span><input id="fOff" autocomplete="off" placeholder="No School"></label>
+    <div class="actions"><button type="button" class="danger" id="offClear">Make it a school day</button><span class="spacer"></span><button type="button" class="ghost" data-close>Cancel</button><button type="submit" class="primary">Save</button></div>
+  </form>
+</dialog>
+
+<dialog id="copyDlg" class="wide">
+  <form id="copyForm" method="dialog">
+    <h3 id="cH">Copy week for Atlas</h3>
+    <label>Class<select id="cCls"></select></label>
+    <div class="preview" id="cPrev"></div>
+    <textarea id="cCode" rows="6" readonly hidden aria-label="HTML code for Canvas" style="font-family:ui-monospace,Menlo,monospace;font-size:12px"></textarea>
+    <p class="meta" id="cNote">Copies your lesson template for this week. Paste it into Atlas; the table and links come along.</p>
+    <div class="actions"><button type="button" class="ghost" data-close>Close</button><button type="button" id="copyHtml" hidden>Copy HTML code</button><button type="submit" class="primary">Copy week</button></div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>window.AGENDA_DATA = {"config": {"classes": ["US History II"], "season": "auto", "name": "", "canvas": {}, "atlasHome": ""}, "weeks": {"2026-11-09": {"focus": "Why did the United States enter World War I, and could the war have been prevented?", "reminders": "Mon–Tue: WWI U.S. Senator simulation. Bring your Neutrality to War worksheet\nWed 11/11: Veterans Day\nFri: Causes of WWI graphic organizer collected", "off": {}, "days": {"fri": [{"id": "n13a", "cls": "US History II", "topic": "World War I", "title": "Causes of WWI Graphic Guided Viewing", "obj": "analyze the state of Europe at the turn of the century and evaluate whether WWI could have been prevented.", "lfocus": "Use the causes of WWI to decide whether the war could have been prevented.", "act": "Causes of WWI Graphic Guided Viewing", "hw": ""}], "mon": [{"id": "n9a", "cls": "US History II", "topic": "World War I", "title": "WWI Simulation of US Senator (Day 1)", "obj": "investigate the Essential Question: Was it in the national interest of the United States to stay neutral or declare war in 1917?\n• analyze lesson content to understand the nation’s response to events leading to U.S. entry into World War I.\n• debate the reasons for and against entry of the United States into World War I by simulating the role of US Senator during WWI and deciding whether it is in the best interest of your constituents to declare war.", "lfocus": "Should the U.S. stay neutral or go to war in 1917? Today you start thinking like a senator.", "act": "WWI Simulation of US Senator\n[Neutrality to War Student Worksheet](https://docs.google.com/document/d/1EXuletRjYxpJlGkno2J6RLmZaWRwUDj0Gp15QD-Qqdc/edit?usp=sharing)", "hw": ""}], "thu": [{"id": "n12a", "cls": "US History II", "topic": "World War I", "title": "The World Wars", "obj": "analyze the state of Europe at the turn of the century and evaluate whether WWI could have been prevented.", "lfocus": "Could World War I have been prevented? Look at the state of Europe around 1900.", "act": "The World Wars", "hw": ""}], "tue": [{"id": "n10a", "cls": "US History II", "topic": "World War I", "title": "WWI Simulation of US Senator (Day 2)", "obj": "investigate the Essential Question: Was it in the national interest of the United States to stay neutral or declare war in 1917?\n• analyze lesson content to understand the nation’s response to events leading to U.S. entry into World War I.\n• debate the reasons for and against entry of the United States into World War I by simulating the role of US Senator during WWI and deciding whether it is in the best interest of your constituents to declare war.", "lfocus": "Debate like a U.S. senator: was declaring war in 1917 in America's best interest?", "act": "WWI Simulation of US Senator\n[Neutrality to War Student Worksheet](https://docs.google.com/document/d/1EXuletRjYxpJlGkno2J6RLmZaWRwUDj0Gp15QD-Qqdc/edit?usp=sharing)", "hw": ""}], "wed": []}}, "2026-11-16": {"focus": "How did World War I change America at home and set the stage for World War II?", "reminders": "Fighting the Great War Guided Reading due Wednesday at 11:30 PM\nThu–Fri: WWI at Home Project work days\nNext week: no school Thursday and Friday for Thanksgiving", "off": {}, "days": {"fri": [{"id": "n20a", "cls": "US History II", "topic": "World War I", "title": "WWI at Home Project", "obj": "SWBAT evaluate whether Wilson fought a “war for democracy” by weighing evidence from the American home front, such as propaganda, the Espionage and Sedition Acts, women’s suffrage and the Great Migration, and defend their answer with a claim and evidence.", "lfocus": "Keep building your case: did Wilson fight a \"war for democracy\"?", "act": "WWI at Home Project", "hw": ""}], "mon": [{"id": "n16a", "cls": "US History II", "topic": "World War I", "title": "The World Wars Documentary", "obj": "SWBAT identify key events, leaders and turning points of the World Wars from a documentary, and explain how WWI set the conditions that led to WWII.", "lfocus": "Follow the key events and leaders of the World Wars and see how WWI set the stage for WWII.", "act": "The World Wars Documentary", "hw": ""}], "thu": [{"id": "n19a", "cls": "US History II", "topic": "World War I", "title": "WWI at Home Project", "obj": "SWBAT evaluate whether Wilson fought a “war for democracy” by weighing evidence from the American home front, such as propaganda, the Espionage and Sedition Acts, women’s suffrage and the Great Migration, and defend their answer with a claim and evidence.", "lfocus": "Was WWI really a \"war for democracy\" at home? Start gathering evidence.", "act": "WWI at Home Project", "hw": ""}], "tue": [{"id": "n17a", "cls": "US History II", "topic": "World War I", "title": "The World Wars Documentary", "obj": "SWBAT identify key events, leaders and turning points of the World Wars from a documentary, and explain how WWI set the conditions that led to WWII.", "lfocus": "Connect the end of World War I to the causes of World War II.", "act": "The World Wars Documentary", "hw": ""}], "wed": [{"id": "n18a", "cls": "US History II", "topic": "World War I", "title": "Fighting the Great War Guided Reading", "obj": "SWBAT: explain how WWI was fought and how total war affected soldiers and civilians.", "lfocus": "How was WWI fought, and how did total war change life for soldiers and civilians?", "act": "Fighting the Great War Guided Reading", "hw": "Guided Reading Due 11:30PM"}]}}, "2026-11-23": {"focus": "Finish the WWI at Home Project: did Wilson fight a “war for democracy”?", "reminders": "Mon–Wed: WWI at Home Project work days\nWWI at Home Project due Wednesday\nNo school Thursday and Friday. Happy Thanksgiving!", "off": {"fri": "No School", "thu": "Happy Thanksgiving! No School"}, "days": {"fri": [], "mon": [{"id": "n23a", "cls": "US History II", "topic": "World War I", "title": "WWI at Home Project", "obj": "SWBAT evaluate whether Wilson fought a “war for democracy” by weighing evidence from the American home front, such as propaganda, the Espionage and Sedition Acts, women’s suffrage and the Great Migration, and defend their answer with a claim and evidence.", "lfocus": "Build your case: what does the home-front evidence say about Wilson’s “war for democracy”?", "act": "WWI at Home Project", "hw": ""}], "thu": [], "tue": [{"id": "n24a", "cls": "US History II", "topic": "World War I", "title": "WWI at Home Project", "obj": "SWBAT evaluate whether Wilson fought a “war for democracy” by weighing evidence from the American home front, such as propaganda, the Espionage and Sedition Acts, women’s suffrage and the Great Migration, and defend their answer with a claim and evidence.", "lfocus": "Turn your evidence into an argument: write and support your claim.", "act": "WWI at Home Project", "hw": ""}], "wed": [{"id": "n25a", "cls": "US History II", "topic": "World War I", "title": "WWI at Home Project", "obj": "SWBAT evaluate whether Wilson fought a “war for democracy” by weighing evidence from the American home front, such as propaganda, the Espionage and Sedition Acts, women’s suffrage and the Great Migration, and defend their answer with a claim and evidence.", "lfocus": "Finish strong: revise, polish and submit your WWI at Home Project.", "act": "WWI at Home Project", "hw": "WWI at Home Project due Wednesday"}]}}}, "updated": "Nov 18, 2026"};</script>
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+const DAYS = [["mon","Monday"],["tue","Tuesday"],["wed","Wednesday"],["thu","Thursday"],["fri","Friday"]];
+const SEASONS = {
+  fall:   {name:"Fall",   line:"Harvest season · leaves are turning"},
+  winter: {name:"Winter", line:"Winter term · bundle up"},
+  spring: {name:"Spring", line:"Spring term · new growth"},
+  summer: {name:"Summer", line:"Summer session · long bright days"}
+};
+const DEFAULT_CONFIG = {classes:["Period 1","Period 2","Period 3","Period 4"], canvas:{}, name:"", atlasHome:"", season:"auto"};
+
+/* ---------- dates ---------- */
+const pad = n => String(n).padStart(2,"0");
+const iso = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const fromIso = s => { const [y,m,d] = s.split("-").map(Number); return new Date(y,m-1,d); };
+const addDays = (d,n) => { const x = new Date(d); x.setDate(x.getDate()+n); return x; };
+function mondayOf(d){ const x = new Date(d.getFullYear(),d.getMonth(),d.getDate()); const wd = (x.getDay()+6)%7; return addDays(x,-wd); }
+function seasonOf(d){ const md = (d.getMonth()+1)*100 + d.getDate();
+  if (md >= 1221 || md < 320) return "winter"; if (md < 621) return "spring"; if (md < 922) return "summer"; return "fall"; }
+function nthWeekday(y,m,wd,n){ const first = new Date(y,m,1); const off = (wd - first.getDay() + 7) % 7; return new Date(y,m,1+off+7*(n-1)); }
+function lastWeekday(y,m,wd){ const last = new Date(y,m+1,0); const off = (last.getDay() - wd + 7) % 7; return new Date(y,m,last.getDate()-off); }
+function holidays(y){ const f = (m,d) => new Date(y,m,d); return [
+  [f(0,1),"New Year's Day"],[nthWeekday(y,0,1,3),"MLK Jr. Day"],[f(1,14),"Valentine's Day"],[nthWeekday(y,1,1,3),"Presidents' Day"],
+  [f(2,17),"St. Patrick's Day"],[f(3,22),"Earth Day"],[lastWeekday(y,4,1),"Memorial Day"],[f(5,19),"Juneteenth"],[f(6,4),"Independence Day"],
+  [nthWeekday(y,8,1,1),"Labor Day"],[nthWeekday(y,9,1,2),"Indigenous Peoples' Day"],[f(9,31),"Halloween"],[f(10,11),"Veterans Day"],
+  [nthWeekday(y,10,4,4),"Thanksgiving"],[addDays(nthWeekday(y,10,4,4),1),"Day after Thanksgiving"],[f(11,24),"Christmas Eve"],[f(11,25),"Christmas"],[f(11,31),"New Year's Eve"]
+].map(([d,n]) => [iso(d),n]); }
+const holidayMap = {};
+function holidayFor(d){ const y = d.getFullYear(); if (!holidayMap[y]) holidayMap[y] = Object.fromEntries(holidays(y)); return holidayMap[y][iso(d)]; }
+const fmtShort = d => d.toLocaleDateString(undefined,{month:"short",day:"numeric"});
+
+/* ---------- state ---------- */
+let weekStart = mondayOf(new Date());
+let week = null, config = {...DEFAULT_CONFIG}, library = {};
+let canEdit = false, store = null, unsubWeek = null;
+
+/* ---------- storage: artifact db, falling back to this browser ---------- */
+function localStore(){
+  const get = k => { try { return JSON.parse(localStorage.getItem("agenda:"+k)); } catch { return null; } };
+  const put = (k,v) => { try { localStorage.setItem("agenda:"+k, JSON.stringify(v)); } catch {} };
+  const libGet = () => get("library") || {};
+  return {
+    kind:"local",
+    watchWeek(key,cb){ cb(get("week:"+key)); return () => {}; },
+    saveWeek(key,data){ put("week:"+key,data); return Promise.resolve(); },
+    getWeek(key){ return Promise.resolve(get("week:"+key)); },
+    watchConfig(cb){ cb(get("config")); },
+    saveConfig(c){ put("config",c); return Promise.resolve(); },
+    watchLibrary(cb){ cb(libGet()); },
+    saveLib(id,item){ const l = libGet(); l[id] = item; put("library",l); return Promise.resolve(); }
+  };
+}
+function dbStore(db){
+  const chains = {};
+  const serial = (key, fn) => (chains[key] = (chains[key] || Promise.resolve()).catch(()=>{}).then(fn));
+  const loadTimer = setTimeout(() => setStatus("Can't reach saved data yet. Showing what's loaded.", false), 10000);
+  return {
+    kind:"db",
+    watchWeek(key,cb){ return db.doc("weeks/"+key).onSnapshot(s => { if (!s.metadata.fromCache) { clearTimeout(loadTimer); setStatus(canEdit ? "Saved to this agenda · everyone you share it with sees changes" : "Live agenda · view only", true); } cb(s.exists ? s.data() : null); }, e => setStatus("Agenda unavailable ("+e.code+")", false)); },
+    saveWeek(key,data){ return serial("w"+key, () => db.doc("weeks/"+key).set(data)); },
+    async getWeek(key){ const s = await db.doc("weeks/"+key).get(); return s.exists ? s.data() : null; },
+    watchConfig(cb){ db.doc("config/main").onSnapshot(s => cb(s.exists ? s.data() : null), () => {}); },
+    saveConfig(c){ return serial("cfg", () => db.doc("config/main").set(c)); },
+    watchLibrary(cb){ db.collection("library").onSnapshot(q => { const o = {}; q.docs.forEach(d => o[d.id] = d.data()); cb(o); }, () => {}); },
+    saveLib(id,item){ return serial("l"+id, () => db.doc("library/"+id).set(item)); }
+  };
+}
+
+function setStatus(text, live){ $("statusText").textContent = text; $("dot").classList.toggle("live", !!live); }
+let toastT;
+function toast(msg){ const t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 2200); }
+
+/* ---------- helpers ---------- */
+function h(tag, attrs, ...kids){ const el = document.createElement(tag);
+  for (const [k,v] of Object.entries(attrs||{})) { if (v == null || v === false) continue;
+    if (k === "class") el.className = v; else if (k.startsWith("on")) el.addEventListener(k.slice(2), v); else el.setAttribute(k, v === true ? "" : v); }
+  for (const c of kids.flat(Infinity)) if (c != null && c !== false) el.append(c.nodeType ? c : document.createTextNode(String(c)));
+  return el; }
+const safeUrl = u => { try { const x = new URL(u); return /^https?:$/.test(x.protocol) ? x.href : null; } catch { return null; } };
+const isAtlas = u => /atlas/i.test(new URL(u).hostname);
+function richText(text){ const frag = document.createDocumentFragment(); text = String(text||"");
+  const put = s => s.split("\n").forEach((part,i) => { if (i) frag.append(document.createElement("br")); if (part) frag.append(part); });
+  const re = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|(https?:\/\/[^\s<]+)|\*\*([^*]+)\*\*/g; let last = 0, m;
+  while ((m = re.exec(text))) { if (m.index > last) put(text.slice(last, m.index));
+    if (m[4]) { const bEl = document.createElement("b"); bEl.textContent = m[4]; frag.append(bEl); last = re.lastIndex; continue; }
+    const u = safeUrl(m[2] || m[3]);
+    if (u) { const a = document.createElement("a"); a.href = u; a.target = "_blank"; a.rel = "noopener"; a.textContent = m[1] || m[3]; frag.append(a); } else put(m[0]);
+    last = re.lastIndex; }
+  if (last < text.length) put(text.slice(last)); return frag; }
+function libId(title, cls){ let s = (cls+"|"+title).toLowerCase().trim(), n = 5381; for (const ch of s) n = ((n*33) ^ ch.charCodeAt(0)) >>> 0; return "l"+n.toString(36); }
+const uid = () => Math.random().toString(36).slice(2,10);
+function emptyWeek(){ return {focus:"", days:{mon:[],tue:[],wed:[],thu:[],fri:[]}}; }
+function classColor(cls){ const i = Math.max(0, (config.classes||[]).indexOf(cls)); const hues = ["var(--accent)","var(--accent-2)","#5b7fa6","#7a6aa8","#3f8f7a","#a0566e","#6b7d3a","#8a6b4c"]; return hues[i % hues.length]; }
+
+/* ---------- season ---------- */
+function currentSeason(){ return config.season && config.season !== "auto" ? config.season : seasonOf(addDays(weekStart,2)); }
+function applySeason(){ const s = currentSeason(); if (document.body.dataset.season !== s) { document.body.dataset.season = s; sky.reset(); }
+  $("seasonIcon").src = sky.icon(s); $("seasonLabel").textContent = SEASONS[s].name + " · " + weekStart.getFullYear(); $("seasonLine").textContent = SEASONS[s].line; }
+
+/* ---------- render ---------- */
+function render(){
+  applySeason();
+  const end = addDays(weekStart,4);
+  $("weekTitle").replaceChildren("Week of ", h("span",{class:"h1-dates"}, `${fmtShort(weekStart)} – ${end.getMonth()===weekStart.getMonth() ? end.getDate() : fmtShort(end)}`));
+  $("jump").value = iso(weekStart);
+  const home = safeUrl(config.atlasHome || ""); $("atlasHome").hidden = !home; if (home) $("atlasHome").href = home;
+
+  const w = week || emptyWeek();
+  const ft = $("focusText"), rem = (w.reminders || "").split("\n").map(x => x.trim()).filter(Boolean);
+  ft.replaceChildren(
+    h("div",{class:"wf"}, h("span",{class:"wflabel"},"Focus"), w.focus ? h("span",{class:"wftext"}, w.focus) : h("span",{class:"empty"}, canEdit ? "Add this week's focus." : "No focus posted.")),
+    h("div",{class:"wf"}, h("span",{class:"wflabel"},"Reminders"), rem.length ? h("ul",{class:"wfrem"}, rem.map(r => h("li",{}, richText(r)))) : h("span",{class:"empty"}, canEdit ? "Add quizzes, due dates and events." : "No reminders.")));
+  $("editFocus").hidden = !canEdit; $("openSettings").hidden = !canEdit;
+  const total = DAYS.reduce((n,[k]) => n + ((w.days||{})[k]||[]).length, 0);
+  $("copyLast").hidden = !canEdit || total > 0;
+  $("copyWeek").hidden = !canEdit || total === 0;
+  $("copyCanvas").hidden = !canEdit || (total === 0 && !Object.keys(w.off || {}).length);
+
+  const todayIso = iso(new Date());
+  renderTable(w, todayIso);
+  const grid = $("week"); grid.replaceChildren();
+  DAYS.forEach(([key,name],i) => {
+    const date = addDays(weekStart,i), hol = holidayFor(date);
+    const items = ((w.days||{})[key]||[]).slice().sort((a,b) => (config.classes||[]).indexOf(a.cls) - (config.classes||[]).indexOf(b.cls));
+    const list = h("ul",{class:"entries"}, items.map(e => entryEl(e,key)));
+    const off = (w.off||{})[key];
+    grid.append(h("section",{class:"day lift"+(iso(date)===todayIso?" today":""),"aria-label":name},
+      h("div",{class:"dayhead"}, h("span",{class:"dayname"},name), h("span",{class:"daydate"},fmtShort(date))),
+      hol ? h("span",{class:"holiday"},hol) : null,
+      off ? offArt(off) : (items.length ? list : h("p",{class:"noday"}, canEdit ? "Nothing planned yet." : "No lessons posted.")),
+      canEdit && !off ? h("button",{class:"add",onclick:() => openEntry(key)},"+ Add lesson") : null,
+      canEdit ? h("button",{class:"add",style:"margin-top:0",onclick:() => openOff(key)}, off ? "Edit day off" : "Set day off") : null));
+  });
+}
+let view = (() => { try { return localStorage.getItem("agenda:view") || "table"; } catch { return "table"; } })();
+let viewCls = null;
+function setView(v){ view = v; try { localStorage.setItem("agenda:view", v); } catch {} render(); }
+$("vTable").addEventListener("click", () => setView("table"));
+$("vCards").addEventListener("click", () => setView("cards"));
+$("vAtlas").addEventListener("click", () => setView("atlas"));
+$("viewCls").addEventListener("change", e => { viewCls = e.target.value; render(); });
+function renderTable(w, todayIso){
+  const isTable = view !== "cards";
+  $("tableView").hidden = !isTable; $("week").hidden = isTable;
+  $("vTable").setAttribute("aria-pressed", view === "table"); $("vCards").setAttribute("aria-pressed", view === "cards"); $("vAtlas").setAttribute("aria-pressed", view === "atlas");
+  const inWeek = new Set(); DAYS.forEach(([k]) => ((w.days||{})[k]||[]).forEach(e => inWeek.add(e.cls)));
+  const opts = [...(config.classes||[]), ...[...inWeek].filter(c => !(config.classes||[]).includes(c))];
+  if (!opts.includes(viewCls)) viewCls = opts.find(c => inWeek.has(c)) || opts[0] || null;
+  const sel = $("viewCls"); sel.hidden = !isTable || opts.length < 2;
+  sel.replaceChildren(...opts.map(c => h("option",{value:c},c))); if (viewCls) sel.value = viewCls;
+  if (!isTable) return;
+  if (view === "atlas") { $("tableView").replaceChildren(h("div",{class:"paper lift"}, viewCls ? weekCopy(viewCls).root : "Add a class in Classes & Atlas first.")); return; }
+  const cols = DAYS.map(([key,name],i) => ({key, name, off: (w.off||{})[key], date: addDays(weekStart,i), items: ((w.days||{})[key]||[]).filter(e => !viewCls || e.cls === viewCls)}));
+  const join = (items, f) => { const parts = items.map(f).filter(Boolean); return parts.length ? parts.flatMap((p,i) => i ? [h("div",{class:"cellsep"}), p] : [p]) : null; };
+  const blank = canEdit ? null : "";
+  const rows = [
+    ["Topic", "topic", c => join(c.items, e => e.topic ? richText(e.topic) : null)],
+    ["SWBAT", "", c => join(c.items, e => e.obj ? richText(e.obj) : null)],
+    ["Lesson Focus", "", c => join(c.items, e => e.lfocus ? h("span",{class:"focusline"}, e.lfocus) : null)],
+    ["Agenda", "", c => join(c.items, e => { const u = e.url && safeUrl(e.url); const body = richText(e.act || e.title || "");
+        return (e.act || e.title || u) ? h("div",{}, body, u ? h("div",{style:"margin-top:6px"}, h("a",{class:"atlas",href:u,target:"_blank",rel:"noopener"}, isAtlas(u) ? "Atlas lesson plan ↗" : "Lesson plan ↗")) : null) : null; })],
+    ["Assignments/ Due Dates", "", c => join(c.items, e => e.hw ? richText(e.hw) : null)]];
+  const today = c => iso(c.date) === todayIso ? "today" : "";
+  const head = h("tr",{}, h("th",{}, viewCls || ""), cols.map(c => { const hol = holidayFor(c.date);
+    return h("th",{class:today(c), scope:"col"}, h("div",{class:"dh"},
+      h("span",{class:"dayname"}, `${c.name} ${c.date.getMonth()+1}/${c.date.getDate()}`),
+      hol ? h("span",{class:"holiday"}, hol) : null,
+      canEdit ? h("div",{style:"display:flex;gap:4px;flex-wrap:wrap"},
+        c.off ? h("button",{class:"tbtn",onclick:() => openOff(c.key)}, "Edit day off")
+        : [...(c.items.length ? c.items.map((e,j) => h("button",{class:"tbtn",onclick:() => openEntry(c.key,e)}, c.items.length > 1 ? `Edit ${j+1}` : "Edit"))
+                              : [h("button",{class:"tbtn",onclick:() => openEntry(c.key, null, viewCls)}, "+ Add")]),
+           h("button",{class:"tbtn ghost",title:"Mark this day as no school",onclick:() => openOff(c.key)}, "Set day off")]) : null)); }));
+  const body = rows.map(([label, cls, f], r) => h("tr",{}, h("th",{scope:"row"}, label), cols.map(c => c.off
+      ? (r === 0 ? h("td",{class:"offcell", rowspan: rows.length}, offArt(c.off)) : null)
+      : h("td",{class:[cls, today(c)].filter(Boolean).join(" ")}, f(c) || h("span",{class:"blank"}, "")))));
+  $("tableView").replaceChildren(h("table",{class:"agtable lift"}, h("thead",{}, head), h("tbody",{}, body)));
+}
+function entryEl(e, dayKey){
+  const url = e.url && safeUrl(e.url);
+  return h("li",{class:"entry"},
+    h("div",{class:"cls"}, h("span",{class:"swatch",style:`background:${classColor(e.cls)}`}), e.cls || "Class", e.example ? h("span",{class:"pill"},"Example") : null),
+    h("div",{class:"title"}, e.title || e.topic || "Lesson"),
+    e.topic && e.title ? h("p",{class:"meta"}, h("b",{},"Topic "), e.topic) : null,
+    e.lfocus ? h("p",{class:"meta"}, h("b",{},"Lesson focus "), h("span",{class:"focusline"}, e.lfocus)) : null,
+    e.obj ? h("p",{class:"meta"}, h("b",{},"Objective "), e.obj) : null,
+    e.teach ? h("p",{class:"meta"}, h("b",{},"Teacher-led "), e.teach) : null,
+    e.indep ? h("p",{class:"meta"}, h("b",{},"Independent "), e.indep) : null,
+    e.act ? h("p",{class:"meta"}, h("b",{},"Activities "), richText(e.act)) : null,
+    (e.evid || e.atype) ? h("p",{class:"meta"}, h("b",{},"Assessment "), e.atype ? h("span",{class:"apill " + e.atype.toLowerCase()}, e.atype) : null, e.atype && e.evid ? " " : null, e.evid ? richText(e.evid) : null) : null,
+    e.hw ? h("p",{class:"meta"}, h("b",{},"HW "), e.hw) : null,
+    e.notes ? h("p",{class:"meta"}, h("b",{},"Notes "), e.notes) : null,
+    h("div",{class:"links"},
+      url ? h("a",{class:"atlas",href:url,target:"_blank",rel:"noopener"}, isAtlas(url) ? "Atlas lesson plan ↗" : "Lesson plan ↗")
+          : h("span",{class:"nolink"}, canEdit ? "No Atlas link yet" : ""),
+      canEdit ? h("button",{class:"edit ghost",onclick:() => openEntry(dayKey,e)},"Edit") : null));
+}
+
+/* ---------- entry dialog ---------- */
+const PLAN_FIELDS = [["fLFocus","lfocus"],["fDoNow","donow"],["fTeach","teach"],["fIndep","indep"],["fClosure","closure"]];
+let editing = null;
+function fillSelects(){
+  $("fDay").replaceChildren(...DAYS.map(([k,n],i) => h("option",{value:k}, `${n}, ${fmtShort(addDays(weekStart,i))}`)));
+  $("fCls").replaceChildren(...(config.classes||[]).map(c => h("option",{value:c},c)));
+  refreshLibList();
+}
+function refreshLibList(){ const cls = $("fCls").value;
+  const items = Object.values(library).sort((a,b) => (b.cls===cls) - (a.cls===cls) || a.title.localeCompare(b.title));
+  $("libList").replaceChildren(...items.map(it => h("option",{value:it.title}, it.cls))); }
+function openEntry(dayKey, e, presetCls){
+  editing = e ? {day:dayKey, id:e.id} : {day:dayKey, id:null};
+  fillSelects();
+  $("entryH").textContent = e ? "Edit lesson" : "Add lesson";
+  $("fDay").value = dayKey;
+  if (e && e.cls && !(config.classes||[]).includes(e.cls)) $("fCls").append(h("option",{value:e.cls},e.cls));
+  $("fCls").value = e ? e.cls : presetCls || (config.classes||[])[0] || "";
+  $("fTopic").value = e ? (e.topic||"") : "";
+  $("fTitle").value = e ? e.title : ""; $("fUrl").value = e ? (e.url||"") : ""; $("fObj").value = e ? (e.obj||"") : ""; $("fHw").value = e ? (e.hw||"") : "";
+  $("fAct").value = e ? (e.act||"") : ""; $("fEvid").value = e ? (e.evid||"") : ""; $("fNotes").value = e ? (e.notes||"") : ""; $("fAType").value = e ? (e.atype||"") : "";
+  for (const [id,k] of PLAN_FIELDS) $(id).value = e ? (e[k]||"") : "";
+  $("draftNote").textContent = "Teacher-led and independent practice go into Atlas's Teaching and Learning row.";
+  $("autofillNote").hidden = true; $("delEntry").hidden = !e;
+  refreshLibList();
+  $("entryDlg").showModal(); $("fTopic").focus();
+}
+function tryAutofill(){
+  const t = $("fTitle").value.trim().toLowerCase(), cls = $("fCls").value; if (!t) return;
+  const all = Object.values(library).filter(it => it.title.toLowerCase() === t);
+  const hit = all.find(it => it.cls === cls) || all[0];
+  if (hit) { if (hit.url && $("fUrl").value !== hit.url) { $("fUrl").value = hit.url; $("autofillNote").hidden = false; }
+    if (hit.obj && !$("fObj").value) $("fObj").value = hit.obj;
+    if (hit.act && !$("fAct").value) $("fAct").value = hit.act; }
+}
+$("fTitle").addEventListener("input", tryAutofill);
+$("fTitle").addEventListener("change", tryAutofill);
+$("fCls").addEventListener("change", () => { refreshLibList(); tryAutofill(); });
+$("fUrl").addEventListener("input", () => $("autofillNote").hidden = true);
+
+$("entryForm").addEventListener("submit", async ev => {
+  ev.preventDefault();
+  const rawUrl = $("fUrl").value.trim();
+  if (rawUrl && !safeUrl(rawUrl)) { $("fUrl").setCustomValidity("Paste a full link that starts with https://"); $("fUrl").reportValidity(); $("fUrl").setCustomValidity(""); return; }
+  const entry = {id: editing.id || uid(), cls:$("fCls").value, topic:$("fTopic").value.trim(), title:($("fTitle").value.trim() || $("fAct").value.trim().split("\n")[0].replace(/\[([^\]]+)\]\([^)]*\)/g,"$1") || $("fTopic").value.trim()), url: rawUrl ? safeUrl(rawUrl) : "", obj:$("fObj").value.trim(), act:$("fAct").value.trim(), evid:$("fEvid").value.trim(), hw:$("fHw").value.trim(), notes:$("fNotes").value.trim(), atype:$("fAType").value};
+  for (const [id,k] of PLAN_FIELDS) entry[k] = $(id).value.trim();
+  if (!entry.title && !entry.obj && !entry.hw) { $("fTopic").setCustomValidity("Add a topic, objective or agenda"); $("fTopic").reportValidity(); $("fTopic").setCustomValidity(""); return; }
+  if (!entry.title) entry.title = "Lesson";
+  const w = structuredClone(week || emptyWeek());
+  for (const [k] of DAYS) w.days[k] = (w.days[k]||[]).filter(x => x.id !== entry.id);
+  w.days[$("fDay").value].push(entry);
+  $("entryDlg").close();
+  await saveWeek(w, "Lesson saved");
+  if (entry.url || entry.act) {
+    const id = libId(entry.title, entry.cls), prev = library[id];
+    if (!prev || prev.url !== entry.url || prev.obj !== entry.obj || prev.act !== entry.act) store.saveLib(id, {title:entry.title, cls:entry.cls, url:entry.url, obj:entry.obj, act:entry.act, updated:Date.now()}).catch(()=>{});
+  }
+});
+$("delEntry").addEventListener("click", async () => {
+  const w = structuredClone(week || emptyWeek());
+  for (const [k] of DAYS) w.days[k] = (w.days[k]||[]).filter(x => x.id !== editing.id);
+  $("entryDlg").close(); await saveWeek(w, "Lesson deleted");
+});
+async function saveWeek(w, msg){
+  week = w; render();
+  try { await store.saveWeek(iso(weekStart), w); toast(msg); }
+  catch (e) { toast(e && e.code === "invalid_argument" ? "Only the agenda's editors can make changes" : "Couldn't save. Try again."); }
+}
+
+/* ---------- focus + settings ---------- */
+$("editFocus").addEventListener("click", () => { $("fFocus").value = (week && week.focus) || ""; $("fRem").value = (week && week.reminders) || ""; $("focusDlg").showModal(); });
+$("focusForm").addEventListener("submit", ev => { ev.preventDefault(); const w = structuredClone(week || emptyWeek()); w.focus = $("fFocus").value.trim(); w.reminders = $("fRem").value.trim(); $("focusDlg").close(); saveWeek(w, "Weekly focus saved"); });
+$("openSettings").addEventListener("click", () => { $("fClasses").value = (config.classes||[]).map(c => config.canvas && config.canvas[c] ? c + " | " + config.canvas[c] : c).join("\n"); $("fName").value = config.name || ""; $("fHome").value = config.atlasHome || ""; $("fSeason").value = config.season || "auto"; $("setDlg").showModal(); });
+$("setForm").addEventListener("submit", async ev => { ev.preventDefault();
+  const home = $("fHome").value.trim();
+  if (home && !safeUrl(home)) { $("fHome").setCustomValidity("Paste a full link that starts with https://"); $("fHome").reportValidity(); $("fHome").setCustomValidity(""); return; }
+  const canvas = {}, classes = [];
+  $("fClasses").value.split("\n").map(s => s.trim()).filter(Boolean).forEach(line => { const i = line.indexOf("|"); const name = (i < 0 ? line : line.slice(0,i)).trim(); const link = i < 0 ? null : safeUrl(line.slice(i+1).trim()); if (!name) return; classes.push(name); if (link) canvas[name] = link; });
+  config = {classes, canvas, name: $("fName").value.trim(), atlasHome: home ? safeUrl(home) : "", season: $("fSeason").value};
+  if (!config.classes.length) config.classes = DEFAULT_CONFIG.classes.slice();
+  $("setDlg").close(); render();
+  try { await store.saveConfig(config); toast("Settings saved"); } catch { toast("Couldn't save settings"); }
+});
+document.querySelectorAll("[data-close]").forEach(b => b.addEventListener("click", () => b.closest("dialog").close()));
+
+$("copyLast").addEventListener("click", async () => {
+  const prev = await store.getWeek(iso(addDays(weekStart,-7))).catch(() => null);
+  const has = prev && DAYS.some(([k]) => (prev.days?.[k]||[]).length);
+  if (!has) { toast("Last week has no lessons to copy"); return; }
+  const w = emptyWeek(); w.focus = "";
+  for (const [k] of DAYS) w.days[k] = (prev.days[k]||[]).map(e => ({...e, id:uid(), hw:"", example:undefined})).map(e => (delete e.example, e));
+  saveWeek(w, "Copied last week's lessons and links");
+});
+
+/* ---------- days off ---------- */
+const TURKEY = `<svg viewBox="0 0 120 112" width="110" height="103" role="img" aria-label="Turkey">
+<g transform="translate(60 58)">${[-80,-60,-40,-20,0,20,40,60,80].map((a,i) => `<ellipse cx="0" cy="-30" rx="10" ry="26" transform="rotate(${a})" fill="${["#b83224","#e07b1f","#f2b632","#b83224","#e07b1f","#f2b632","#b83224","#e07b1f","#f2b632"][i]}"/>`).join("")}</g>
+<ellipse cx="60" cy="74" rx="25" ry="27" fill="#7a4628"/>
+<ellipse cx="60" cy="80" rx="15" ry="16" fill="#9a5d36"/>
+<circle cx="60" cy="46" r="14" fill="#8e5530"/>
+<circle cx="54.5" cy="43" r="3.4" fill="#fff"/><circle cx="65.5" cy="43" r="3.4" fill="#fff"/>
+<circle cx="55" cy="43.5" r="1.7" fill="#222"/><circle cx="65" cy="43.5" r="1.7" fill="#222"/>
+<path d="M55.5 48.5 L64.5 48.5 L60 55 Z" fill="#f2a120"/>
+<path d="M62 52 q5 6 1 12 q-4 -4 -1 -12z" fill="#d1342b"/>
+<path d="M52 100 v8 m-3 0 h6 M68 100 v8 m-3 0 h6" stroke="#e0901c" stroke-width="3" stroke-linecap="round" fill="none"/>
+</svg>`;
+function offArt(label){ const d = h("div",{class:"offart"});
+  if (/thanksgiving|turkey/i.test(label)) { const s = document.createElement("span"); s.innerHTML = TURKEY; d.append(s.firstElementChild); }
+  d.append(h("strong",{}, label)); return d; }
+let offKey = null;
+function openOff(key){ offKey = key; const w = week || emptyWeek(); const cur = (w.off||{})[key]; const i = DAYS.findIndex(([k]) => k === key); const hol = holidayFor(addDays(weekStart,i));
+  $("offH").textContent = `No school · ${DAYS[i][1]}`; $("fOff").value = cur || (hol ? `${hol} · No School` : "No School"); $("offClear").hidden = !cur; $("offDlg").showModal(); }
+$("offForm").addEventListener("submit", ev => { ev.preventDefault(); const w = structuredClone(week || emptyWeek()); w.off = {...(w.off||{}), [offKey]: $("fOff").value.trim() || "No School"}; $("offDlg").close(); saveWeek(w, "Marked as no school"); });
+$("offClear").addEventListener("click", () => { const w = structuredClone(week || emptyWeek()); w.off = {...(w.off||{})}; delete w.off[offKey]; $("offDlg").close(); saveWeek(w, "Back to a school day"); });
+
+/* ---------- copy week for Atlas ---------- */
+const ord = n => n + ((n%100 >= 11 && n%100 <= 13) ? "th" : (["th","st","nd","rd"][n%10] || "th"));
+const longDate = d => `${d.toLocaleDateString("en-US",{weekday:"long"})}, ${d.toLocaleDateString("en-US",{month:"long"})} ${ord(d.getDate())}`;
+function planText(e){ const res = e.act || e.title || "";
+  const parts = [e.donow && "**Do Now:** " + e.donow, e.teach && "**Teacher-Led Instruction:** " + e.teach, e.indep && "**Independent Practice:** " + e.indep, e.closure && "**Closure:** " + e.closure];
+  if (!parts.some(Boolean)) return res;
+  return [...parts, res && "**Activity / Resources:** " + res].filter(Boolean).join("\n\n"); }
+function weekCopy(cls){
+  const w = week || emptyWeek();
+  const cols = DAYS.map(([k],i) => { const items = ((w.days||{})[k]||[]).filter(e => e.cls === cls);
+    const pick = f => items.map(f).filter(Boolean).join("\n\n");
+    const off = (w.off||{})[k];
+    return {date: addDays(weekStart,i), obj: off || pick(e => [e.lfocus && "**Lesson Focus:** " + e.lfocus, e.obj].filter(Boolean).join("\n")), act: pick(planText), evid: pick(e => [e.atype ? e.atype + ":" : "", e.evid].filter(Boolean).join(" ")),
+      notes: pick(e => [e.hw ? "HW: " + e.hw : "", e.notes].filter(Boolean).join("\n"))}; });
+  const cv = config.canvas && config.canvas[cls];
+  const F = "font-family:Lato,Arial,Helvetica,sans-serif;font-size:14px;color:#222";
+  const B = "border:1px solid #d0d0d0;padding:8px 10px;vertical-align:top;" + F;
+  const LBL = B + ";background:#d9d9d9;text-align:left";
+  const BLUE = "color:#3b73c8";
+  const nameTable = h("table",{style:"border-collapse:collapse;width:100%"}, h("tbody",{}, h("tr",{},
+    h("td",{style:LBL+";width:5%"}, "Name"),
+    h("td",{style:B+";width:40%"}, config.name ? config.name : h("span",{style:BLUE},"Name")),
+    h("td",{style:LBL+";width:6%"}, "Canvas Link"),
+    h("td",{style:B}, cv ? h("a",{href:cv,target:"_blank",rel:"noopener",style:BLUE}, cls + " Canvas Course") : h("span",{style:BLUE},"Insert Canvas Course Link")))));
+  const note = h("p",{style:F+";font-style:italic;margin:14px 0"}, "* Standards for the week will be selected above from the corresponding curriculum unit.");
+  const lessonRow = h("tr",{}, h("td",{style:B+";text-align:right;font-style:italic;background:#fff"}, "Lesson"),
+    cols.map((c,i) => [h("td",{style:B+";background:#e8e8e8;width:3%"}, String(i+1)), h("td",{style:B+";width:14.6%;text-align:center;"+BLUE}, longDate(c.date))]));
+  const bodyRow = (bold, sub, grey, f) => h("tr",{},
+    h("td",{style:B+";width:12%;background:"+(grey ? "#d9d9d9" : "#fff")}, h("b",{}, bold), sub ? [document.createElement("br"), sub] : null),
+    cols.map(c => h("td",{colspan:"2", style:B+";background:"+(grey ? "#efefef" : "#fff")}, f(c))));
+  const lessonTable = h("table",{style:"border-collapse:collapse;width:100%;table-layout:fixed"}, h("tbody",{}, lessonRow,
+    bodyRow("Learning Objective", null, true, c => richText(c.obj)),
+    bodyRow("Teaching and Learning", "(Activities / Strategies)", false, c => richText(c.act)),
+    bodyRow("Evidence of Student Learning", "(Summative/Formative Assessment)", true, c => richText(c.evid))));
+  const notesAll = cols.map(c => c.notes ? `${longDate(c.date)}: ${c.notes}` : "").filter(Boolean).join("\n");
+  const root = h("div",{}, nameTable, note, lessonTable,
+    h("p",{style:F+";margin:16px 0 4px"}, h("b",{}, h("i",{}, "Additional Notes:"))),
+    notesAll ? h("p",{style:F+";margin:0"}, richText(notesAll)) : null);
+  const text = [`Name\n${config.name || ""}`, `Canvas Link\n${cv || ""}`,
+    "* Standards for the week will be selected above from the corresponding curriculum unit.",
+    ...cols.map((c,i) => [`Lesson ${i+1} — ${longDate(c.date)}`, c.obj && "Learning Objective:\n" + c.obj, c.act && "Teaching and Learning (Activities / Strategies):\n" + c.act,
+      c.evid && "Evidence of Student Learning (Summative/Formative Assessment):\n" + c.evid, c.notes && "Additional Notes:\n" + c.notes].filter(Boolean).join("\n"))].join("\n\n").replace(/\*\*/g, "");
+  return {root, html: root.innerHTML, text};
+}
+const SEASON_HEX = {fall:["#f3e2d2","#a3361a"], winter:["#dde8f2","#1d5a86"], spring:["#e2eedc","#3a7333"], summer:["#ecebd5","#0b6f7e"]};
+function canvasCopy(cls){
+  const w = week || emptyWeek(); const [wash, acc] = SEASON_HEX[currentSeason()];
+  const F = "font-family:Lato,Arial,Helvetica,sans-serif;font-size:14px;color:#222";
+  const B = "border:1px solid #cfcfcf;padding:10px;vertical-align:top;text-align:left;" + F;
+  const md = d => `${d.getMonth()+1}/${d.getDate()}`;
+  const cols = DAYS.map(([k,name],i) => { const d = addDays(weekStart,i); return {name, d, off: (w.off||{})[k], hol: holidayFor(d), items: ((w.days||{})[k]||[]).filter(e => e.cls === cls)}; });
+  const pick = (c, f) => c.items.map(f).filter(Boolean).join("\n\n");
+  const rows = [
+    ["Topic", c => pick(c, e => e.topic), true],
+    ["SWBAT", c => pick(c, e => e.obj)],
+    ["Lesson Focus", c => pick(c, e => e.lfocus), false, "color:" + acc + ";font-weight:700"],
+    ["Agenda", c => pick(c, e => e.act || e.title)],
+    ["Assignments/ Due Dates", c => pick(c, e => e.hw)]];
+  const end = addDays(weekStart,4), heading = `${cls} · Week of ${fmtShort(weekStart)} – ${fmtShort(end)}`;
+  const rem = (w.reminders || "").split("\n").map(x => x.trim()).filter(Boolean);
+  const head = h("tr",{}, h("th",{style:B+";background:"+wash+";width:12%"}, ""),
+    cols.map(c => h("th",{style:B+";background:"+wash+";text-align:center;width:17.6%"}, `${c.name} ${md(c.d)}`,
+      c.hol && !c.off ? [document.createElement("br"), h("span",{style:"font-weight:400;font-size:12px"}, c.hol)] : null)));
+  const body = rows.map(([label, f, center, extra], r) => h("tr",{}, h("th",{style:B+";background:"+wash+";font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#555"}, label),
+    cols.map(c => c.off
+      ? (r === 0 ? h("td",{rowspan:String(rows.length), style:B+";text-align:center;vertical-align:middle;background:#fbf3e6;font-size:18px"},
+          /thanksgiving|turkey/i.test(c.off) ? [h("span",{style:"font-size:52px;line-height:1.1"}, "🦃"), document.createElement("br")] : null, h("b",{}, c.off)) : null)
+      : h("td",{style:B+(center ? ";text-align:center;font-weight:700" : "")+(extra ? ";" + extra : "")}, richText(f(c))))));
+  const s = currentSeason(), EMO = {fall:"🍂", winter:"❄️", spring:"🌸", summer:"☀️"}[s], bg = {fall:"#f8f1ea", winter:"#f1f5f9", spring:"#f2f7ef", summer:"#faf6e9"}[s];
+  const lab = "margin:0 0 8px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:" + acc;
+  const root = h("div",{style:"background:"+bg+";border:1px solid "+wash+";border-radius:16px;padding:20px;"+F},
+    h("p",{style:lab+";margin-bottom:6px"}, `${EMO} ${SEASONS[s].name} · ${weekStart.getFullYear()}`),
+    h("h2",{style:"margin:0 0 4px;font-family:Lato,Arial,Helvetica,sans-serif;font-size:30px;line-height:1.15;color:#222"}, "Week of ",
+      h("span",{style:"color:"+acc}, `${fmtShort(weekStart)} – ${end.getMonth()===weekStart.getMonth() ? end.getDate() : fmtShort(end)}`)),
+    h("p",{style:"margin:0 0 16px;color:#666"}, cls),
+    (w.focus || rem.length) ? h("div",{style:"background:#fff;border:1px solid "+wash+";border-radius:12px;padding:14px 16px;margin:0 0 16px"},
+      h("p",{style:lab}, "This week"),
+      w.focus ? h("p",{style:"margin:0 0 8px;font-size:18px;font-weight:700;color:#222"}, w.focus) : null,
+      rem.length ? h("ul",{style:"margin:0;padding-left:20px"}, rem.map(x => h("li",{style:"margin:2px 0"}, richText(x)))) : null) : null,
+    h("table",{style:"border-collapse:collapse;width:100%;table-layout:fixed;background:#fff"}, h("thead",{}, head), h("tbody",{}, body)));
+  const text = [heading, w.focus && "This week's focus: " + w.focus, rem.length && "Reminders:\n" + rem.map(x => "• " + x).join("\n"),
+    ...cols.map(c => c.off ? `${c.name} ${md(c.d)}: ${c.off}` : [`${c.name} ${md(c.d)}`, ...rows.map(([l,f]) => { const v = f(c); return v && `${l}: ${v}`; })].filter(Boolean).join("\n"))]
+    .filter(Boolean).join("\n\n").replace(/\*\*/g, "").replace(/\[([^\]]+)\]\(([^)]+)\)/g, "$1 ($2)");
+  return {root, html: root.innerHTML, text};
+}
+let copyMode = "atlas";
+const buildCopy = cls => copyMode === "canvas" ? canvasCopy(cls) : weekCopy(cls);
+function classesThisWeek(){ const w = week || emptyWeek(), s = new Set(); DAYS.forEach(([k]) => ((w.days||{})[k]||[]).forEach(e => s.add(e.cls)));
+  const known = config.classes || []; return [...known.filter(c => s.has(c)), ...[...s].filter(c => !known.includes(c))]; }
+function showCopyPreview(){ $("cPrev").replaceChildren(buildCopy($("cCls").value).root); }
+function openCopy(mode){ copyMode = mode;
+  let cl = classesThisWeek(); if (!cl.length) cl = (config.classes || []).slice(0,1);
+  $("cCls").replaceChildren(...cl.map(c => h("option",{value:c},c)));
+  $("cH").textContent = mode === "canvas" ? "Copy for Canvas" : "Copy week for Atlas";
+  $("cNote").textContent = mode === "canvas" ? "The student agenda for this week. Paste it into your Canvas page in place of last week's." : "Copies your lesson template for this week. Paste it into Atlas; the table and links come along.";
+  $("copyHtml").hidden = mode !== "canvas"; $("cCode").hidden = true;
+  showCopyPreview(); $("copyDlg").showModal(); }
+$("copyHtml").addEventListener("click", async () => { const code = buildCopy($("cCls").value).html;
+  try { await navigator.clipboard.writeText(code); toast("HTML code copied. Paste it into Canvas's HTML Editor."); return; } catch {}
+  const ta = $("cCode"); ta.value = code; ta.hidden = false; ta.focus(); ta.select();
+  $("cNote").textContent = "Your browser blocked copying. The code is selected: press Ctrl+C (or ⌘C), then paste it into Canvas's HTML Editor."; });
+$("copyWeek").addEventListener("click", () => openCopy("atlas"));
+$("copyCanvas").addEventListener("click", () => openCopy("canvas"));
+$("cCls").addEventListener("change", showCopyPreview);
+$("copyForm").addEventListener("submit", async ev => { ev.preventDefault(); const {html, text} = buildCopy($("cCls").value); const dest = copyMode === "canvas" ? "Canvas" : "Atlas";
+  try { await navigator.clipboard.write([new ClipboardItem({"text/html": new Blob([html],{type:"text/html"}), "text/plain": new Blob([text],{type:"text/plain"})})]); toast(`Week copied. Paste it into ${dest}.`); return; } catch {}
+  try { await navigator.clipboard.writeText(text); toast(`Copied as plain text. Paste it into ${dest}.`); return; } catch {}
+  const r = document.createRange(); r.selectNodeContents($("cPrev")); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+  $("cNote").textContent = "Your browser blocked copying. The week is selected: press Ctrl+C (or ⌘C), then paste into " + dest + "."; });
+
+/* ---------- navigation ---------- */
+function go(d){ weekStart = mondayOf(d); watchWeek(); }
+$("prev").addEventListener("click", () => go(addDays(weekStart,-7)));
+$("next").addEventListener("click", () => go(addDays(weekStart,7)));
+$("thisWeek").addEventListener("click", () => go(new Date()));
+$("jump").addEventListener("change", e => { if (e.target.value) go(fromIso(e.target.value)); });
+function watchWeek(){ if (unsubWeek) unsubWeek(); week = null; render(); if (store) unsubWeek = store.watchWeek(iso(weekStart), d => { week = d; render(); }); }
+
+/* ---------- seasonal sky ---------- */
+const sky = (() => {
+  const cv = $("sky"), ctx = cv.getContext("2d"); let W = 0, H = 0, dpr = 1, parts = [], raf = 0, sprites = [], season = "fall";
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const PAL = {
+    fall:   ["#b8321f","#d2511c","#e47f26","#eda534","#9e3418","#c8691b","#d9ab2b","#8c4a22"],
+    winter: ["#ffffff","#dbe8f5","#b9d0e8"],
+    spring: ["#f5b3c8","#f8cad9","#ef93b3","#fbdde6"],
+    summer: ["#ffd25e","#ffe39a","#fff0c2"]
+  };
+  const shade = (hex, f) => { const n = parseInt(hex.slice(1),16), r = n >> 16, g = n >> 8 & 255, b = n & 255;
+    const m = v => Math.max(0, Math.min(255, Math.round(f < 0 ? v * (1 + f) : v + (255 - v) * f))); return `rgb(${m(r)},${m(g)},${m(b)})`; };
+  const MAPLE = [[0,-1],[.13,-.66],[.33,-.78],[.28,-.42],[.66,-.6],[.57,-.34],[.98,-.32],[.72,-.06],[.84,.06],[.46,.2],[.52,.4],[.1,.3],[0,.36]];
+  function maple(c){ c.beginPath(); MAPLE.forEach(([x,y],i) => i ? c.lineTo(x,y) : c.moveTo(x,y)); for (let i = MAPLE.length - 2; i > 0; i--) c.lineTo(-MAPLE[i][0], MAPLE[i][1]); c.closePath(); }
+  function oval(c){ c.beginPath(); c.moveTo(0,-1); c.bezierCurveTo(.62,-.62,.55,.45,0,.82); c.bezierCurveTo(-.55,.45,-.62,-.62,0,-1); c.closePath(); }
+  function petal(c){ c.beginPath(); c.moveTo(0,.9); c.bezierCurveTo(.75,.4,.6,-.7,.12,-.9); c.lineTo(0,-.72); c.lineTo(-.12,-.9); c.bezierCurveTo(-.6,-.7,-.75,.4,0,.9); c.closePath(); }
+  function sprite(size, draw){ const s = document.createElement("canvas"); s.width = s.height = size * 2; const c = s.getContext("2d"); c.translate(size, size); c.scale(size * .9, size * .9); draw(c); return s; }
+  function leaf(col, kind){ return sprite(48, c => {
+    const g = c.createLinearGradient(-1,-1,1,1); g.addColorStop(0, shade(col,.28)); g.addColorStop(.5, col); g.addColorStop(1, shade(col,-.32));
+    (kind ? oval : maple)(c); c.fillStyle = g; c.fill();
+    c.strokeStyle = shade(col,-.45); c.lineCap = "round"; c.globalAlpha = .5; c.lineWidth = .035; c.beginPath();
+    if (kind) { c.moveTo(0,.8); c.lineTo(0,-.88); for (let y = -.5; y < .6; y += .27) { c.moveTo(0,y+.12); c.lineTo(.36,y-.07); c.moveTo(0,y+.12); c.lineTo(-.36,y-.07); } }
+    else { c.moveTo(0,.32); c.lineTo(0,-.9); [[.62,-.5],[-.62,-.5],[.75,-.02],[-.75,-.02]].forEach(([x,y]) => { c.moveTo(0,.24); c.lineTo(x,y); }); }
+    c.stroke(); c.globalAlpha = .85; c.lineWidth = .06; c.beginPath(); c.moveTo(0, kind ? .8 : .32); c.quadraticCurveTo(.06, kind ? .92 : .7, .03, 1); c.stroke(); }); }
+  function flake(col){ return sprite(32, c => { c.strokeStyle = col; c.lineWidth = .09; c.lineCap = "round"; c.shadowColor = "rgba(70,120,170,.55)"; c.shadowBlur = 3;
+    for (let i = 0; i < 6; i++) { c.save(); c.rotate(i * Math.PI / 3); c.beginPath(); c.moveTo(0,0); c.lineTo(0,-.95);
+      c.moveTo(0,-.5); c.lineTo(.24,-.72); c.moveTo(0,-.5); c.lineTo(-.24,-.72); c.moveTo(0,-.76); c.lineTo(.14,-.9); c.moveTo(0,-.76); c.lineTo(-.14,-.9); c.stroke(); c.restore(); } }); }
+  function blossom(col){ return sprite(40, c => { const g = c.createLinearGradient(0,1,0,-1); g.addColorStop(0,"#ffffff"); g.addColorStop(.45,col); g.addColorStop(1,shade(col,-.12)); petal(c); c.fillStyle = g; c.fill(); }); }
+  function mote(col){ return sprite(24, c => { const g = c.createRadialGradient(0,0,0,0,0,1); g.addColorStop(0,"#fffbe8"); g.addColorStop(.3,col); g.addColorStop(1,"rgba(255,214,110,0)"); c.fillStyle = g; c.beginPath(); c.arc(0,0,1,0,6.3); c.fill(); }); }
+  function build(){ const p = PAL[season];
+    sprites = season === "fall" ? p.flatMap(col => [leaf(col,0), leaf(col,0), leaf(col,1)])
+      : season === "spring" ? [...p.map(blossom), ...p.map(blossom), leaf("#7fae5c",1), leaf("#94c06e",1)]
+      : season === "winter" ? p.map(flake) : p.map(mote); }
+  function make(){ const z = Math.random();
+    const size = season === "summer" ? 6 + z * 12 : season === "winter" ? 4 + z * 10 : season === "spring" ? 7 + z * 10 : 9 + z * 17;
+    return {x: Math.random() * W, y: Math.random() * H, z, size, spr: sprites[Math.floor(Math.random() * sprites.length)],
+      r: Math.random() * 6.28, vr: (Math.random() - .5) * .02, flip: Math.random() * 6.28, vf: .015 + Math.random() * .035, ph: Math.random() * 6.28, sw: .5 + Math.random() * 1.1}; }
+  function resize(){ dpr = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
+  function reset(){ season = document.body.dataset.season || "fall"; build();
+    const n = Math.round(Math.min(season === "winter" ? 70 : 38, W / (season === "winter" ? 20 : 34)));
+    parts = Array.from({length: n}, make).sort((a,b) => a.z - b.z); if (still) frame(); }
+  function frame(){ ctx.clearRect(0,0,W,H); const t = performance.now() / 1000; const wind = Math.sin(t * .13) * .7 + Math.sin(t * .41) * .3;
+    for (const p of parts) {
+      const sp = .35 + p.z * .8;
+      if (!still) {
+        if (season === "summer") { p.y -= .16 * sp; p.x += Math.sin(t * .5 + p.ph) * .25; }
+        else { const fall = season === "fall" ? .6 : season === "winter" ? .42 : .38;
+          p.y += fall * sp + Math.sin(t * 1.3 + p.ph) * .18;
+          p.x += (wind + Math.sin(t * .9 + p.ph) * p.sw) * sp * .6 + (season === "spring" ? .25 : 0);
+          p.r += p.vr + wind * .004; p.flip += p.vf; }
+        if (p.y > H + 40) { p.y = -40; p.x = Math.random() * W; } if (p.y < -40) { p.y = H + 40; p.x = Math.random() * W; }
+        if (p.x > W + 40) p.x = -40; if (p.x < -40) p.x = W + 40;
+      }
+      const flat = season === "summer" || season === "winter";
+      ctx.globalAlpha = season === "summer" ? .3 + .45 * (.5 + .5 * Math.sin(t * 1.6 + p.ph)) : .3 + p.z * .6;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); if (!flat) ctx.scale(Math.max(.18, Math.abs(Math.cos(p.flip))), 1);
+      ctx.drawImage(p.spr, -p.size, -p.size, p.size * 2, p.size * 2); ctx.restore();
+    }
+    ctx.globalAlpha = 1; if (!still && !document.hidden) raf = requestAnimationFrame(frame); }
+  function icon(s){ const prev = season; season = s;
+    const c = s === "fall" ? leaf("#d2511c",0) : s === "spring" ? blossom("#ef93b3") : s === "winter" ? flake("#7fa8cf")
+      : sprite(24, x => { x.fillStyle = "#f2b12e"; x.beginPath(); x.arc(0,0,.5,0,6.3); x.fill(); x.strokeStyle = "#f2b12e"; x.lineWidth = .14; x.lineCap = "round";
+          for (let i = 0; i < 8; i++) { x.save(); x.rotate(i * Math.PI / 4); x.beginPath(); x.moveTo(0,-.68); x.lineTo(0,-.95); x.stroke(); x.restore(); } });
+    season = prev; return c.toDataURL(); }
+  addEventListener("resize", () => { resize(); reset(); });
+  document.addEventListener("visibilitychange", () => { cancelAnimationFrame(raf); if (!document.hidden && !still) raf = requestAnimationFrame(frame); });
+  resize();
+  return { reset(){ reset(); if (!still) { cancelAnimationFrame(raf); raf = requestAnimationFrame(frame); } }, icon };
+})();
+
+/* ---------- draft lesson plan with Claude ---------- */
+let sampleApi = null;
+$("draftBtn").addEventListener("click", async () => {
+  const note = $("draftNote"), btn = $("draftBtn");
+  const obj = $("fObj").value.trim();
+  if (!obj) { note.textContent = "Add the SWBAT / learning objective first, then draft."; return; }
+  if (!sampleApi) return;
+  btn.disabled = true; note.textContent = "Drafting from your objective…";
+  const prompt = `You help a high school teacher write a daily lesson plan for the course "${$("fCls").value}".
+Topic: ${$("fTopic").value.trim() || "(not given)"}
+Learning objective (SWBAT): ${obj}
+Planned activity and resources: ${$("fAct").value.trim() || "(not given)"}
+Write the plan in a practical lesson-plan voice for the teacher. Use only what the objective and activity support; do not invent links or materials.
+Return only JSON with these string fields:
+"focus": one student-friendly sentence or question, at most 16 words, stating the lesson focus;
+"doNow": a 1-2 sentence warm-up;
+"teacherLed": 2-4 sentences of teacher-led instruction (I do / we do), naming the activity if given;
+"independent": 2-3 sentences of independent student practice (you do);
+"closure": one sentence closing check for understanding.
+Plain text in each field, no markdown.`;
+  try {
+    const r = await sampleApi.json(prompt, {modelTier: "default"});
+    const map = {fLFocus: r.focus, fDoNow: r.doNow, fTeach: r.teacherLed, fIndep: r.independent, fClosure: r.closure};
+    let filled = 0;
+    for (const [id, v] of Object.entries(map)) if (typeof v === "string" && v.trim() && !$(id).value.trim()) { $(id).value = v.trim(); filled++; }
+    note.textContent = filled ? "Drafted. Read it over and edit before you save." : "Every box already has text, so nothing was changed. Clear a box to redraft it.";
+  } catch (e) {
+    if (e && e.code === "not_granted") { btn.hidden = true; note.textContent = "Drafting is turned off for this page."; }
+    else if (e && e.code === "rate_limited") note.textContent = "Too many drafts at once. Try again in a minute.";
+    else note.textContent = "Couldn't draft right now. You can still type the plan yourself.";
+  } finally { btn.disabled = false; }
+});
+
+/* ---------- boot ---------- */
+function startWith(s){
+  store = s;
+  store.watchConfig(c => { config = {...DEFAULT_CONFIG, ...(c||{})}; render(); });
+  store.watchLibrary(l => { library = l || {}; });
+  if (s.kind === "local") setStatus("Saved in this browser only", false);
+  watchWeek();
+}
+render();
+if (window.AGENDA_DATA) {
+  const D = window.AGENDA_DATA; canEdit = false;
+  startWith({ kind: "static",
+    watchWeek(key, cb){ cb(D.weeks[key] || null); return () => {}; },
+    getWeek(key){ return Promise.resolve(D.weeks[key] || null); },
+    saveWeek(){ return Promise.reject({code: "invalid_argument"}); },
+    watchConfig(cb){ cb(D.config); }, saveConfig(){ return Promise.reject({}); },
+    watchLibrary(cb){ cb({}); }, saveLib(){ return Promise.resolve(); } });
+  setStatus("Updated " + D.updated, true);
+} else if (window.claude && window.claude.use) {
+  Promise.all([window.claude.use("db"), window.claude.use("user")]).then(async ([db, user]) => {
+    if (db) {
+      const can = user ? await user.canEdit() : false; canEdit = !!can;
+      window.claude.use("sample").then(sm => { sampleApi = sm; $("draftBtn").hidden = !sm || !canEdit; }).catch(() => {});
+      startWith(dbStore(db));
+    } else { canEdit = true; startWith(localStore()); }
+  }).catch(() => { canEdit = true; startWith(localStore()); });
+} else { canEdit = true; startWith(localStore()); }
+})();
+</script>
+
+</body>
+</html>
