@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>US History II · Weekly Agenda</title>
+<title>__TITLE__</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Lexend:wght@400;600;700&display=swap">
@@ -409,10 +409,6 @@ function render(){
   const home = safeUrl(config.atlasHome || ""); $("atlasHome").hidden = !home; if (home) $("atlasHome").href = home;
 
   const w = week || emptyWeek();
-  const ft = $("focusText"), rem = (w.reminders || "").split("\n").map(x => x.trim()).filter(Boolean);
-  ft.replaceChildren(
-    h("div",{class:"wf"}, h("span",{class:"wflabel"},"Focus"), w.focus ? h("span",{class:"wftext"}, w.focus) : h("span",{class:"empty"}, canEdit ? "Add this week's focus." : "No focus posted.")),
-    h("div",{class:"wf"}, h("span",{class:"wflabel"},"Reminders"), rem.length ? h("ul",{class:"wfrem"}, rem.map(r => h("li",{}, richText(r)))) : h("span",{class:"empty"}, canEdit ? "Add quizzes, due dates and events." : "No reminders.")));
   $("editFocus").hidden = !canEdit; $("openSettings").hidden = !canEdit;
   const total = DAYS.reduce((n,[k]) => n + ((w.days||{})[k]||[]).length, 0);
   $("copyLast").hidden = !canEdit || total > 0;
@@ -421,10 +417,15 @@ function render(){
 
   const todayIso = iso(new Date());
   renderTable(w, todayIso);
+  const ff = focusFor(w, viewCls), rem = (ff.reminders || "").split("\n").map(x => x.trim()).filter(Boolean);
+  $("focusH").textContent = (config.classes || []).length > 1 && viewCls ? `This week \u00b7 ${viewCls}` : "This week";
+  $("focusText").replaceChildren(
+    h("div",{class:"wf"}, h("span",{class:"wflabel"},"Focus"), ff.focus ? h("span",{class:"wftext"}, ff.focus) : h("span",{class:"empty"}, canEdit ? "Add this week's focus." : "No focus posted.")),
+    h("div",{class:"wf"}, h("span",{class:"wflabel"},"Reminders"), rem.length ? h("ul",{class:"wfrem"}, rem.map(r => h("li",{}, richText(r)))) : h("span",{class:"empty"}, canEdit ? "Add quizzes, due dates and events." : "No reminders.")));
   const grid = $("week"); grid.replaceChildren();
   DAYS.forEach(([key,name],i) => {
     const date = addDays(weekStart,i), hol = holidayFor(date);
-    const items = ((w.days||{})[key]||[]).slice().sort((a,b) => (config.classes||[]).indexOf(a.cls) - (config.classes||[]).indexOf(b.cls));
+    const items = ((w.days||{})[key]||[]).filter(e => (config.classes||[]).length < 2 || !viewCls || e.cls === viewCls).slice().sort((a,b) => (config.classes||[]).indexOf(a.cls) - (config.classes||[]).indexOf(b.cls));
     const list = h("ul",{class:"entries"}, items.map(e => entryEl(e,key)));
     const off = (w.off||{})[key];
     grid.append(h("section",{class:"day lift"+(iso(date)===todayIso?" today":""),"aria-label":name},
@@ -436,12 +437,17 @@ function render(){
   });
 }
 let view = (() => { try { return localStorage.getItem("agenda:view") || "table"; } catch { return "table"; } })();
-let viewCls = null;
+let viewCls = (() => { try { return localStorage.getItem("agenda:cls"); } catch { return null; } })();
+function focusFor(w, cls){
+  const cf = (w.classFocus || {})[cls]; if (cf) return cf;
+  const first = (config.classes || [])[0];
+  return (!cls || cls === first) ? {focus: w.focus || "", reminders: w.reminders || ""} : {focus: "", reminders: ""};
+}
 function setView(v){ view = v; try { localStorage.setItem("agenda:view", v); } catch {} render(); }
 $("vTable").addEventListener("click", () => setView("table"));
 $("vCards").addEventListener("click", () => setView("cards"));
 $("vAtlas").addEventListener("click", () => setView("atlas"));
-$("viewCls").addEventListener("change", e => { viewCls = e.target.value; render(); });
+$("viewCls").addEventListener("change", e => { viewCls = e.target.value; try { localStorage.setItem("agenda:cls", viewCls); } catch {} render(); });
 function renderTable(w, todayIso){
   const isTable = view !== "cards";
   $("tableView").hidden = !isTable; $("week").hidden = isTable;
@@ -449,7 +455,7 @@ function renderTable(w, todayIso){
   const inWeek = new Set(); DAYS.forEach(([k]) => ((w.days||{})[k]||[]).forEach(e => inWeek.add(e.cls)));
   const opts = [...(config.classes||[]), ...[...inWeek].filter(c => !(config.classes||[]).includes(c))];
   if (!opts.includes(viewCls)) viewCls = opts.find(c => inWeek.has(c)) || opts[0] || null;
-  const sel = $("viewCls"); sel.hidden = !isTable || opts.length < 2;
+  const sel = $("viewCls"); sel.hidden = opts.length < 2;
   sel.replaceChildren(...opts.map(c => h("option",{value:c},c))); if (viewCls) sel.value = viewCls;
   if (!isTable) return;
   if (view === "atlas") { $("tableView").replaceChildren(h("div",{class:"paper lift"}, viewCls ? weekCopy(viewCls).root : "Add a class in Classes & Atlas first.")); return; }
@@ -515,7 +521,7 @@ function openEntry(dayKey, e, presetCls){
   $("entryH").textContent = e ? "Edit lesson" : "Add lesson";
   $("fDay").value = dayKey;
   if (e && e.cls && !(config.classes||[]).includes(e.cls)) $("fCls").append(h("option",{value:e.cls},e.cls));
-  $("fCls").value = e ? e.cls : presetCls || (config.classes||[])[0] || "";
+  $("fCls").value = e ? e.cls : presetCls || viewCls || (config.classes||[])[0] || "";
   $("fTopic").value = e ? (e.topic||"") : "";
   $("fTitle").value = e ? e.title : ""; $("fUrl").value = e ? (e.url||"") : ""; $("fObj").value = e ? (e.obj||"") : ""; $("fHw").value = e ? (e.hw||"") : "";
   $("fAct").value = e ? (e.act||"") : ""; $("fEvid").value = e ? (e.evid||"") : ""; $("fNotes").value = e ? (e.notes||"") : ""; $("fAType").value = e ? (e.atype||"") : "";
@@ -568,8 +574,8 @@ async function saveWeek(w, msg){
 }
 
 /* ---------- focus + settings ---------- */
-$("editFocus").addEventListener("click", () => { $("fFocus").value = (week && week.focus) || ""; $("fRem").value = (week && week.reminders) || ""; $("focusDlg").showModal(); });
-$("focusForm").addEventListener("submit", ev => { ev.preventDefault(); const w = structuredClone(week || emptyWeek()); w.focus = $("fFocus").value.trim(); w.reminders = $("fRem").value.trim(); $("focusDlg").close(); saveWeek(w, "Weekly focus saved"); });
+$("editFocus").addEventListener("click", () => { const ffd = focusFor(week || emptyWeek(), viewCls); $("fFocus").value = ffd.focus || ""; $("fRem").value = ffd.reminders || ""; $("focusDlg").showModal(); });
+$("focusForm").addEventListener("submit", ev => { ev.preventDefault(); const w = structuredClone(week || emptyWeek()); const nf = {focus: $("fFocus").value.trim(), reminders: $("fRem").value.trim()}; w.classFocus = {...(w.classFocus || {}), [viewCls || (config.classes || [])[0] || "Class"]: nf}; if (!viewCls || viewCls === (config.classes || [])[0]) { w.focus = nf.focus; w.reminders = nf.reminders; } $("focusDlg").close(); saveWeek(w, "Weekly focus saved"); });
 $("openSettings").addEventListener("click", () => { $("fClasses").value = (config.classes||[]).map(c => config.canvas && config.canvas[c] ? c + " | " + config.canvas[c] : c).join("\n"); $("fName").value = config.name || ""; $("fHome").value = config.atlasHome || ""; $("fSeason").value = config.season || "auto"; $("setDlg").showModal(); });
 $("setForm").addEventListener("submit", async ev => { ev.preventDefault();
   const home = $("fHome").value.trim();
@@ -672,7 +678,7 @@ function canvasCopy(cls){
     ["Agenda", c => pick(c, e => e.act || e.title)],
     ["Assignments/ Due Dates", c => pick(c, e => e.hw)]];
   const end = addDays(weekStart,4), heading = `${cls} · Week of ${fmtShort(weekStart)} – ${fmtShort(end)}`;
-  const rem = (w.reminders || "").split("\n").map(x => x.trim()).filter(Boolean);
+  const ff = focusFor(w, cls), rem = (ff.reminders || "").split("\n").map(x => x.trim()).filter(Boolean);
   const head = h("tr",{}, h("th",{style:B+";background:"+wash+";width:12%"}, ""),
     cols.map(c => h("th",{style:B+";background:"+wash+";text-align:center;width:17.6%"}, `${c.name} ${md(c.d)}`,
       c.hol && !c.off ? [document.createElement("br"), h("span",{style:"font-weight:400;font-size:12px"}, c.hol)] : null)));
@@ -688,12 +694,12 @@ function canvasCopy(cls){
     h("h2",{style:"margin:0 0 4px;font-family:Lato,Arial,Helvetica,sans-serif;font-size:30px;line-height:1.15;color:#222"}, "Week of ",
       h("span",{style:"color:"+acc}, `${fmtShort(weekStart)} – ${end.getMonth()===weekStart.getMonth() ? end.getDate() : fmtShort(end)}`)),
     h("p",{style:"margin:0 0 16px;color:#666"}, cls),
-    (w.focus || rem.length) ? h("div",{style:"background:#fff;border:1px solid "+wash+";border-radius:12px;padding:14px 16px;margin:0 0 16px"},
+    (ff.focus || rem.length) ? h("div",{style:"background:#fff;border:1px solid "+wash+";border-radius:12px;padding:14px 16px;margin:0 0 16px"},
       h("p",{style:lab}, "This week"),
-      w.focus ? h("p",{style:"margin:0 0 8px;font-size:18px;font-weight:700;color:#222"}, w.focus) : null,
+      ff.focus ? h("p",{style:"margin:0 0 8px;font-size:18px;font-weight:700;color:#222"}, w.focus) : null,
       rem.length ? h("ul",{style:"margin:0;padding-left:20px"}, rem.map(x => h("li",{style:"margin:2px 0"}, richText(x)))) : null) : null,
     h("table",{style:"border-collapse:collapse;width:100%;table-layout:fixed;background:#fff"}, h("thead",{}, head), h("tbody",{}, body)));
-  const text = [heading, w.focus && "This week's focus: " + w.focus, rem.length && "Reminders:\n" + rem.map(x => "• " + x).join("\n"),
+  const text = [heading, ff.focus && "This week's focus: " + ff.focus, rem.length && "Reminders:\n" + rem.map(x => "• " + x).join("\n"),
     ...cols.map(c => c.off ? `${c.name} ${md(c.d)}: ${c.off}` : [`${c.name} ${md(c.d)}`, ...rows.map(([l,f]) => { const v = f(c); return v && `${l}: ${v}`; })].filter(Boolean).join("\n"))]
     .filter(Boolean).join("\n\n").replace(/\*\*/g, "").replace(/\[([^\]]+)\]\(([^)]+)\)/g, "$1 ($2)");
   return {root, html: root.innerHTML, text};
