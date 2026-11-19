@@ -53,6 +53,11 @@ body{background-color:var(--bg);background-image:radial-gradient(1100px 560px at
 .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:4px 14px 4px 6px;border-radius:999px;border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 75%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--accent)}
 .eyebrow img{width:24px;height:24px;display:block}
 .h1-dates{color:var(--accent)}
+.h1-cls{color:var(--accent-2)}
+/* Sociology: its own plum + teal colors on top of the season's background */
+body[data-cls="sociology"][data-season]{--accent:#7a3b8c;--accent-2:#23857a;--wash:#f0e4f1;--line:#e6d9e8;--on-accent:#ffffff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body[data-cls="sociology"][data-season]{--accent:#d7a6e8;--accent-2:#6fd1c4;--wash:#2a2030;--line:#3d3144;--on-accent:#1d1222}}
+:root[data-theme="dark"] body[data-cls="sociology"][data-season]{--accent:#d7a6e8;--accent-2:#6fd1c4;--wash:#2a2030;--line:#3d3144;--on-accent:#1d1222}
 .lift{box-shadow:0 1px 2px color-mix(in srgb,var(--ink) 6%,transparent),0 14px 34px -18px color-mix(in srgb,var(--accent) 45%,transparent)}
 .plan{border:1px solid var(--line);border-radius:12px;padding:12px 14px 14px;display:flex;flex-direction:column;gap:12px;margin:0;min-width:0}
 .plan legend{font-family:var(--font-display);font-size:21px;padding:0 6px}
@@ -417,6 +422,10 @@ function render(){
 
   const todayIso = iso(new Date());
   renderTable(w, todayIso);
+  const shortCls = viewCls ? viewCls.replace(/^US History II$/, "US II") : "";
+  document.body.dataset.cls = viewCls ? viewCls.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") : "";
+  { const e2 = addDays(weekStart,4);
+    $("weekTitle").replaceChildren(shortCls ? h("span",{class:"h1-cls"}, shortCls + " \u00b7 ") : "", "Week of ", h("span",{class:"h1-dates"}, `${fmtShort(weekStart)} \u2013 ${e2.getMonth()===weekStart.getMonth() ? e2.getDate() : fmtShort(e2)}`)); }
   const ff = focusFor(w, viewCls), rem = (ff.reminders || "").split("\n").map(x => x.trim()).filter(Boolean);
   $("focusH").textContent = (config.classes || []).length > 1 && viewCls ? `This week \u00b7 ${viewCls}` : "This week";
   $("focusText").replaceChildren(
@@ -665,7 +674,7 @@ function weekCopy(cls){
 }
 const SEASON_HEX = {fall:["#f3e2d2","#a3361a"], winter:["#dde8f2","#1d5a86"], spring:["#e2eedc","#3a7333"], summer:["#ecebd5","#0b6f7e"]};
 function canvasCopy(cls){
-  const w = week || emptyWeek(); const [wash, acc] = SEASON_HEX[currentSeason()];
+  const w = week || emptyWeek(); const [wash, acc] = /^sociology$/i.test(cls) ? ["#f0e4f1", "#7a3b8c"] : SEASON_HEX[currentSeason()];
   const F = "font-family:Lato,Arial,Helvetica,sans-serif;font-size:14px;color:#222";
   const B = "border:1px solid #cfcfcf;padding:10px;vertical-align:top;text-align:left;" + F;
   const md = d => `${d.getMonth()+1}/${d.getDate()}`;
