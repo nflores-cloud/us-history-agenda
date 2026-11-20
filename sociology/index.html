@@ -6,7 +6,7 @@
 <title>Sociology · Weekly Agenda</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Lexend:wght@400;600;700&family=Limelight&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Lexend:wght@400;600;700&family=Limelight&family=Poiret+One&display=swap">
 <style>
 /* Layout: a week ledger — season banner on top, five day columns (stacking on phones), each lesson a row with its Atlas link. */
 :root{
@@ -54,16 +54,32 @@ body{background-color:var(--bg);background-image:radial-gradient(1100px 560px at
 .eyebrow img{width:24px;height:24px;display:block}
 .h1-dates{color:var(--accent)}
 .h1-cls{color:var(--accent-2)}
-/* Week theme: Roaring Twenties (Art Deco black, gold and cream) */
-body[data-wtheme="1920s"][data-season]{--bg:#f3ead6;--surface:#fffaf0;--ink:#1c1a17;--muted:#6b6250;--accent:#94701a;--accent-2:#1f4e4a;--wash:#efe1bd;--line:#d9c690;--on-accent:#fffaf0;--font-display:"Limelight","Poiret One",Georgia,serif;
-  background-image:repeating-conic-gradient(from 0deg at 50% -8%,color-mix(in srgb,#c9a227 9%,transparent) 0deg 3deg,transparent 3deg 10deg),radial-gradient(900px 520px at 50% -10%,color-mix(in srgb,#c9a227 22%,transparent),transparent 65%)}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body[data-wtheme="1920s"][data-season]{--bg:#111111;--surface:#1b1914;--ink:#f3e9cf;--muted:#b8ab88;--accent:#e2b84b;--accent-2:#7fcbbf;--wash:#2a2416;--line:#4b4026;--on-accent:#111111}}
-:root[data-theme="dark"] body[data-wtheme="1920s"][data-season]{--bg:#111111;--surface:#1b1914;--ink:#f3e9cf;--muted:#b8ab88;--accent:#e2b84b;--accent-2:#7fcbbf;--wash:#2a2416;--line:#4b4026;--on-accent:#111111}
-body[data-wtheme="1920s"] h1{letter-spacing:.01em}
-body[data-wtheme="1920s"] .agtable,body[data-wtheme="1920s"] .focus,body[data-wtheme="1920s"] .day{border:3px double var(--accent)}
-body[data-wtheme="1920s"] .agtable thead th{border-bottom:2px solid var(--accent)}
-body[data-wtheme="1920s"] .dayname,body[data-wtheme="1920s"] .agtable .dh .dayname{font-size:19px;letter-spacing:.02em}
-body[data-wtheme="1920s"] .eyebrow{border-color:var(--accent)}
+/* Week theme: Roaring Twenties. A Gatsby night: black lacquer, gold leaf, deco frames (one look in light and dark) */
+:root body[data-wtheme="1920s"][data-wtheme][data-season]{--bg:#0d0c0a;--surface:#15130e;--ink:#f4ead2;--muted:#c2b088;--accent:#e3bc55;--accent-2:#f6e7b8;--wash:#1e1a11;--line:#3a311d;--on-accent:#0d0c0a;--ok:#9fd9b0;
+  --gold:linear-gradient(100deg,#8a6a1f 0%,#f6dd8f 20%,#c9a227 38%,#fff4c7 50%,#b8892a 64%,#f1cf6e 82%,#8a6a1f 100%);
+  --font-display:"Limelight","Poiret One",Georgia,serif;color-scheme:dark;
+  background-image:radial-gradient(1100px 620px at 50% -16%,rgba(227,188,85,.30),transparent 60%),repeating-conic-gradient(from 0deg at 50% -14%,rgba(227,188,85,.11) 0deg 2deg,transparent 2deg 9deg),radial-gradient(900px 520px at 50% 118%,rgba(31,78,74,.45),transparent 65%)}
+body[data-wtheme="1920s"] h1{letter-spacing:.02em;margin-top:10px}
+body[data-wtheme="1920s"] h1 .h1-dates,body[data-wtheme="1920s"] h1 .h1-cls{background:var(--gold);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:deco-shine 7s linear infinite}
+@keyframes deco-shine{to{background-position:220% center}}
+body[data-wtheme="1920s"] .banner > div:first-child::after{content:"";display:block;width:min(560px,100%);height:22px;margin-top:10px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 560 22'%3E%3Cg fill='none' stroke='%23e3bc55' stroke-width='1.4'%3E%3Cpath d='M0 11H232M328 11H560M24 6H214M346 6H536M24 16H214M346 16H536'/%3E%3Cpath d='M280 1l16 10-16 10-16-10z' fill='%23e3bc55'/%3E%3Cpath d='M246 11l9-6 9 6-9 6zM296 11l9-6 9 6-9 6z'/%3E%3Cpath d='M280 5l6 6-6 6-6-6z' stroke='%230d0c0a' fill='%23fff4c7'/%3E%3C/g%3E%3C/svg%3E") left center/contain no-repeat}
+body[data-wtheme="1920s"] .sub{font-family:"Poiret One","Lexend",sans-serif;letter-spacing:.16em;text-transform:uppercase;font-size:15px;color:var(--accent-2)}
+body[data-wtheme="1920s"] .eyebrow{background:#0d0c0a;border:1px solid var(--accent);color:var(--accent);box-shadow:0 0 18px -6px rgba(227,188,85,.6)}
+body[data-wtheme="1920s"] .focus,body[data-wtheme="1920s"] .agtable,body[data-wtheme="1920s"] .day,body[data-wtheme="1920s"] .paper{background:var(--surface);border:1px solid #c9a227;box-shadow:inset 0 0 0 4px var(--surface),inset 0 0 0 5px rgba(227,188,85,.55),0 0 0 1px rgba(227,188,85,.15),0 22px 50px -24px rgba(227,188,85,.45)}
+body[data-wtheme="1920s"] .focus h2,body[data-wtheme="1920s"] .wflabel{color:var(--accent);letter-spacing:.18em}
+body[data-wtheme="1920s"] .wftext{background:var(--gold);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;font-size:24px}
+body[data-wtheme="1920s"] .agtable thead th{background:linear-gradient(180deg,#1f1a10,#141109);border-bottom:2px solid #c9a227}
+body[data-wtheme="1920s"] .agtable thead th:first-child{color:var(--accent)}
+body[data-wtheme="1920s"] .agtable .dh .dayname,body[data-wtheme="1920s"] .dayname{background:var(--gold);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;font-size:20px;letter-spacing:.03em}
+body[data-wtheme="1920s"] .agtable th[scope=row]{background:#18150d;color:var(--accent);letter-spacing:.16em;border-right:1px solid #5a4a24}
+body[data-wtheme="1920s"] .agtable td{color:var(--ink)}
+body[data-wtheme="1920s"] .agtable td.topic{color:var(--accent-2);letter-spacing:.04em}
+body[data-wtheme="1920s"] .focusline{color:var(--accent)}
+body[data-wtheme="1920s"] .wfrem li::marker{content:"\25C6  ";color:var(--accent);font-size:11px}
+body[data-wtheme="1920s"] button.primary,body[data-wtheme="1920s"] .seg button[aria-pressed=true]{background:var(--gold);background-size:200% auto;color:#0d0c0a;border-color:#c9a227}
+body[data-wtheme="1920s"] .seg,body[data-wtheme="1920s"] button,body[data-wtheme="1920s"] select,body[data-wtheme="1920s"] input[type=date]{border-color:#5a4a24}
+body[data-wtheme="1920s"] .agtable td a:not(.atlas),body[data-wtheme="1920s"] .entry .meta a,body[data-wtheme="1920s"] .wfrem a{background:rgba(227,188,85,.12);border-color:rgba(227,188,85,.5);color:#f6dd8f}
+@media (prefers-reduced-motion:reduce){body[data-wtheme="1920s"] h1 .h1-dates,body[data-wtheme="1920s"] h1 .h1-cls{animation:none}}
 /* Sociology: deep wine + dark brown on top of the season's background */
 body[data-cls="sociology"][data-season]{--accent:#7b1e34;--accent-2:#5a3a22;--wash:#f3e3e5;--line:#e8d5d7;--on-accent:#ffffff}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body[data-cls="sociology"][data-season]{--accent:#e597a7;--accent-2:#cfa47e;--wash:#2d1c20;--line:#46302f;--on-accent:#24100f}}
@@ -797,9 +813,11 @@ const sky = (() => {
   function mote(col){ return sprite(24, c => { const g = c.createRadialGradient(0,0,0,0,0,1); g.addColorStop(0,"#fffbe8"); g.addColorStop(.3,col); g.addColorStop(1,"rgba(255,214,110,0)"); c.fillStyle = g; c.beginPath(); c.arc(0,0,1,0,6.3); c.fill(); }); }
   function diamond(col){ return sprite(28, c => { const g = c.createLinearGradient(-1,-1,1,1); g.addColorStop(0, shade(col,.35)); g.addColorStop(.5, col); g.addColorStop(1, shade(col,-.3));
     c.beginPath(); c.moveTo(0,-1); c.lineTo(.62,0); c.lineTo(0,1); c.lineTo(-.62,0); c.closePath(); c.fillStyle = g; c.fill(); c.strokeStyle = "rgba(255,255,255,.55)"; c.lineWidth = .08; c.beginPath(); c.moveTo(0,-.7); c.lineTo(.3,0); c.stroke(); }); }
+  function star(col){ return sprite(28, c => { const g = c.createRadialGradient(0,0,0,0,0,1); g.addColorStop(0,"#ffffff"); g.addColorStop(.35,col); g.addColorStop(1,"rgba(255,230,150,0)");
+    c.fillStyle = g; c.beginPath(); c.moveTo(0,-1); c.quadraticCurveTo(.12,-.12,1,0); c.quadraticCurveTo(.12,.12,0,1); c.quadraticCurveTo(-.12,.12,-1,0); c.quadraticCurveTo(-.12,-.12,0,-1); c.fill(); }); }
   function strip(col){ return sprite(28, c => { c.fillStyle = col; c.fillRect(-.22,-.9,.44,1.8); c.fillStyle = "rgba(255,255,255,.25)"; c.fillRect(-.22,-.9,.12,1.8); }); }
   function build(){ const p = PAL[season];
-    if (season === "1920s") { sprites = [diamond("#d4af37"), diamond("#f1d27a"), diamond("#b8860b"), strip("#d4af37"), strip("#1c1a17"), strip("#f1d27a"), strip("#fffaf0"), mote("#f6dc8a")]; return; }
+    if (season === "1920s") { sprites = [diamond("#d4af37"), diamond("#f1d27a"), diamond("#fff4c7"), strip("#d4af37"), strip("#f6dd8f"), strip("#fffaf0"), strip("#b8860b"), mote("#f6dc8a"), mote("#fff4c7"), star("#fff4c7"), star("#f1d27a")]; return; }
     sprites = season === "fall" ? p.flatMap(col => [leaf(col,0), leaf(col,0), leaf(col,1)])
       : season === "spring" ? [...p.map(blossom), ...p.map(blossom), leaf("#7fae5c",1), leaf("#94c06e",1)]
       : season === "winter" ? p.map(flake) : p.map(mote); }
@@ -809,7 +827,7 @@ const sky = (() => {
       r: Math.random() * 6.28, vr: (Math.random() - .5) * .02, flip: Math.random() * 6.28, vf: .015 + Math.random() * .035, ph: Math.random() * 6.28, sw: .5 + Math.random() * 1.1}; }
   function resize(){ dpr = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr,0,0,dpr,0,0); }
   function reset(){ season = document.body.dataset.wtheme || document.body.dataset.season || "fall"; build();
-    const n = Math.round(Math.min(season === "winter" ? 70 : 38, W / (season === "winter" ? 20 : 34)));
+    const n = Math.round(Math.min(season === "winter" || season === "1920s" ? 64 : 38, W / (season === "winter" || season === "1920s" ? 22 : 34)));
     parts = Array.from({length: n}, make).sort((a,b) => a.z - b.z); if (still) frame(); }
   function frame(){ ctx.clearRect(0,0,W,H); const t = performance.now() / 1000; const wind = Math.sin(t * .13) * .7 + Math.sin(t * .41) * .3;
     for (const p of parts) {
