@@ -48,7 +48,11 @@ def main(data_dir):
         for key, d in raw.items():
             days = {k: [{x: e.get(x, "") for x in KEEP} for e in v if e.get("cls") == cls] for k, v in (d.get("days") or {}).items()}
             focus, reminders = focus_for(d, cls, classes[0])
-            weeks[key] = {"focus": focus, "reminders": reminders, "off": d.get("off") or {}, "days": days}
+            wk = {"focus": focus, "reminders": reminders, "off": d.get("off") or {}, "days": days}
+            theme = (d.get("themes") or {}).get(cls)
+            if theme:
+                wk["themes"] = {cls: theme}
+            weeks[key] = wk
         data = {"config": {"classes": [cls], "season": cfg.get("season", "auto"), "name": "", "canvas": {}, "atlasHome": ""},
                 "weeks": weeks, "updated": updated}
         js = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
