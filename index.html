@@ -80,6 +80,10 @@ body[data-wtheme="1920s"] button.primary,body[data-wtheme="1920s"] .seg button[a
 body[data-wtheme="1920s"] .seg,body[data-wtheme="1920s"] button,body[data-wtheme="1920s"] select,body[data-wtheme="1920s"] input[type=date]{border-color:#5a4a24}
 body[data-wtheme="1920s"] .agtable td a:not(.atlas),body[data-wtheme="1920s"] .entry .meta a,body[data-wtheme="1920s"] .wfrem a{background:rgba(227,188,85,.12);border-color:rgba(227,188,85,.5);color:#f6dd8f}
 @media (prefers-reduced-motion:reduce){body[data-wtheme="1920s"] h1 .h1-dates,body[data-wtheme="1920s"] h1 .h1-cls{animation:none}}
+/* AP World Modern: ocean blue + copper, like an old map */
+body[data-cls="ap-world-modern"][data-season]{--accent:#1d4f7a;--accent-2:#a85a24;--wash:#e3ebf3;--line:#d3dde8;--on-accent:#ffffff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body[data-cls="ap-world-modern"][data-season]{--accent:#8fc1ec;--accent-2:#e5a36d;--wash:#17222e;--line:#2c3b4b;--on-accent:#0d1620}}
+:root[data-theme="dark"] body[data-cls="ap-world-modern"][data-season]{--accent:#8fc1ec;--accent-2:#e5a36d;--wash:#17222e;--line:#2c3b4b;--on-accent:#0d1620}
 /* Sociology: deep wine + dark brown on top of the season's background */
 body[data-cls="sociology"][data-season]{--accent:#7b1e34;--accent-2:#5a3a22;--wash:#f3e3e5;--line:#e8d5d7;--on-accent:#ffffff}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body[data-cls="sociology"][data-season]{--accent:#e597a7;--accent-2:#cfa47e;--wash:#2d1c20;--line:#46302f;--on-accent:#24100f}}
@@ -709,7 +713,7 @@ function weekCopy(cls){
 }
 const SEASON_HEX = {fall:["#f3e2d2","#a3361a"], winter:["#dde8f2","#1d5a86"], spring:["#e2eedc","#3a7333"], summer:["#ecebd5","#0b6f7e"]};
 function canvasCopy(cls){
-  const w = week || emptyWeek(); const [wash, acc] = /^sociology$/i.test(cls) ? ["#f3e3e5", "#7b1e34"] : SEASON_HEX[currentSeason()];
+  const w = week || emptyWeek(); const [wash, acc] = /^sociology$/i.test(cls) ? ["#f3e3e5", "#7b1e34"] : /^ap world modern$/i.test(cls) ? ["#e3ebf3", "#1d4f7a"] : SEASON_HEX[currentSeason()];
   const F = "font-family:Lato,Arial,Helvetica,sans-serif;font-size:14px;color:#222";
   const B = "border:1px solid #cfcfcf;padding:10px;vertical-align:top;text-align:left;" + F;
   const md = d => `${d.getMonth()+1}/${d.getDate()}`;
